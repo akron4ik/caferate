@@ -1,21 +1,30 @@
 package model;
 
-import java.util.List;
+import javax.persistence.*;
 
+
+@Entity
+@Table(name = "cafes")
 public class Cafe {
+    public static final int START_SEQ = 100000;
 
+    @Id
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     private int id;
-    private String name;
-    private List<String> menu;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "rating")
     private int rating;
 
     public Cafe() {
     }
 
-    public Cafe(int id, String name, List<String> menu, int rating) {
+    public Cafe(int id, String name, int rating) {
         this.id = id;
-        this.name = name;
-        this.menu = menu;
+        this.description = name;
         this.rating = rating;
     }
 
@@ -27,20 +36,12 @@ public class Cafe {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<String> getMenu() {
-        return menu;
-    }
-
-    public void setMenu(List<String> menu) {
-        this.menu = menu;
+    public void setDescription(String name) {
+        this.description = name;
     }
 
     public int getRating() {
@@ -55,8 +56,7 @@ public class Cafe {
     public String toString() {
         return "Cafe{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", menu=" + menu +
+                ", name='" + description + '\'' +
                 ", rating=" + rating +
                 '}';
     }

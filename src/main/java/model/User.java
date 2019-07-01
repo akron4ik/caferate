@@ -1,17 +1,34 @@
 package model;
 
+import org.springframework.util.CollectionUtils;
+
+import java.util.Collection;
+import java.util.EnumSet;
+import java.util.Set;
+
 public class User {
     private int id;
-    private String name;
-    private boolean appreciated;
+    private String name;//имя
+    private boolean appreciated;//проголосовал
+    private Set<Role> roles;//роль
 
     public User() {
     }
 
-    public User(int id, String name, boolean appreciated) {
+    public User(User u){
+        this(u.getId(), u.getName(), u.isAppreciated(), u.getRoles());
+
+    }
+    public User(int id, String name, boolean appreciated, Role role, Role... roles){
+        this(id, name, appreciated, EnumSet.of(role, roles));
+    }
+
+    public User(int id, String name, boolean appreciated, Collection<Role> roles) {
         this.id = id;
         this.name = name;
         this.appreciated = appreciated;
+        setRoles(roles);
+
     }
 
     public int getId() {
@@ -36,6 +53,14 @@ public class User {
 
     public void setAppreciated(boolean appreciated) {
         this.appreciated = appreciated;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 
     @Override
