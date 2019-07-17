@@ -9,13 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
-    public static final int START_SEQ = 100000;
-
-    @Id
-    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
-    private int id;
+public class User extends AbstractBaseEntity{
 
     @Column(name = "name")
     private String name;//имя
@@ -40,20 +34,12 @@ public class User {
         this(id, name, appreciated, EnumSet.of(role, roles));
     }
 
-    public User(int id, String name, boolean appreciated, Collection<Role> roles) {
-        this.id = id;
+    public User(Integer id, String name, boolean appreciated, Collection<Role> roles) {
+        super(id);
         this.name = name;
         this.appreciated = appreciated;
         setRoles(roles);
 
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {

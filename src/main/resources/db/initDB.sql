@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS user_roles;
 DROP TABLE IF EXISTS cafes;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS meals;
+DROP TABLE IF EXISTS voices;
 DROP SEQUENCE IF EXISTS global_seq;
 
 CREATE SEQUENCE global_seq START WITH 100000;
@@ -12,7 +14,6 @@ CREATE TABLE users
   appreciated        BOOL DEFAULT TRUE       NOT NULL
 
 );
---CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
 CREATE TABLE user_roles
 (
@@ -22,12 +23,31 @@ CREATE TABLE user_roles
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE TABLE cafes (
+CREATE TABLE cafes
+(
   id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-  user_id     INTEGER   NOT NULL,
   description TEXT      NOT NULL,
-  rating   INT       NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+  rating   INT       NOT NULL
 );
---CREATE UNIQUE INDEX meals_unique_user_datetime_idx
- -- ON meals (user_id, date_time);
+
+CREATE TABLE meals
+(
+  id INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+  name VARCHAR NOT NULL,
+  date_time TIMESTAMP NOT NULL,
+  price DOUBLE PRECISION NOT NULL,
+  cafe_id INTEGER NOT NULL
+  /*FOREIGN KEY (cafe_id) REFERENCES cafes(id)*/
+
+);
+
+CREATE TABLE voices
+(
+   id INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+   date_time TIMESTAMP NOT NULL,
+   cafe_id INTEGER NOT NULL,
+   user_id INTEGER NOT NULL
+  /* FOREIGN KEY (cafe_id) REFERENCES cafes(id)*/
+   /*FOREIGN KEY (user_id) REFERENCES users(id)*/
+);
+/*CREATE UNIQUE INDEX uniq_datetime_to_userid ON voices(date_time, user_id);*/

@@ -2,21 +2,11 @@ package model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
-@NamedQueries({
-        @NamedQuery(name = Cafe.ALL_SORTED, query = "SELECT c FROM Cafe c WHERE c.user.id=:user_id ORDER BY c.description"),
-})
 @Entity
 @Table(name = "cafes")
-public class Cafe {
-    public static final int START_SEQ = 100000;
-
-    public static final String ALL_SORTED = "Cafe.getAllSorted";
-
-    @Id
-    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
-    private int id;
+public class Cafe extends AbstractBaseEntity {
 
     @Column(name = "description")
     private String description;
@@ -24,26 +14,21 @@ public class Cafe {
     @Column(name = "rating")
     private int rating;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @NotNull
-    private User user;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cafe")
+    private List<Meal> meals;
 
     public Cafe() {
     }
 
-    public Cafe(int id, String name, int rating) {
-        this.id = id;
+    public Cafe (String name, int rating ){
+        this(null, name, rating);
+    }
+
+
+    public Cafe(Integer id, String name, int rating) {
+        super(id);
         this.description = name;
         this.rating = rating;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getDescription() {
@@ -60,6 +45,14 @@ public class Cafe {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public boolean isNew() {
+        return this.id == null;
+    }
+
+    public List<Meal> getMeals() {
+        return meals;
     }
 
     @Override

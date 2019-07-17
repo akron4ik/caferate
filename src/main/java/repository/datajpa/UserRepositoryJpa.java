@@ -1,8 +1,7 @@
-package repository.jpa;
+package repository.datajpa;
 
 import model.User;
 import org.springframework.stereotype.Repository;
-import repository.UserRepository;
 
 import java.util.List;
 
