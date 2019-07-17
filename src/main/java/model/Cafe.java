@@ -1,12 +1,17 @@
 package model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-
+@NamedQueries({
+        @NamedQuery(name = Cafe.ALL_SORTED, query = "SELECT c FROM Cafe c WHERE c.user.id=:user_id ORDER BY c.description"),
+})
 @Entity
 @Table(name = "cafes")
 public class Cafe {
     public static final int START_SEQ = 100000;
+
+    public static final String ALL_SORTED = "Cafe.getAllSorted";
 
     @Id
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
@@ -18,6 +23,11 @@ public class Cafe {
 
     @Column(name = "rating")
     private int rating;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @NotNull
+    private User user;
 
     public Cafe() {
     }

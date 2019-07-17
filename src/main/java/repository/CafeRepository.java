@@ -9,5 +9,5 @@ public interface CafeRepository {
     Cafe save(Cafe cafe);
     boolean delete(int id);
     Cafe get(int id);
-    List<Cafe> getAll();
+    List<Cafe> getAll(int userId);
 }

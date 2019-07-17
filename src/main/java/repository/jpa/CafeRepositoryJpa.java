@@ -34,7 +34,10 @@ public class CafeRepositoryJpa implements CafeRepository {
     }
 
     @Override
-    public List<Cafe> getAll() {
-        return null;
+    public List<Cafe> getAll(int userId) {
+
+        return em.createNamedQuery(Cafe.ALL_SORTED, Cafe.class)
+                .setParameter("user_id", userId)
+                .getResultList();
     }
 }
