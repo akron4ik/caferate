@@ -2,6 +2,7 @@ package web;
 
 public class SecurityUtil {
     private static int id = 100000;
+
     private SecurityUtil() {
     }
     public static int authUserId() {

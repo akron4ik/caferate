@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>Meal</title>
+    <title>Admin Storage</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -11,19 +11,18 @@
     <h3><a href="index.jsp">Home</a></h3>
     <hr>
     <%--<h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>--%>
-    <jsp:useBean id="cafe" type="model.Cafe" scope="request"/>
-    <form method="post" action="meals">
-        <input type="hidden" name="id" value="${meal.id}">
+    <jsp:useBean id="restaurant" type="model.Restaurant" scope="request"/>
+    <form method="post" action="restaurants">
+        <input type="hidden" name="id" value="${restaurant.id}">
         <dl>
-            <dt>DateTime:</dt>
-            <dd><input type="datetime-local" value="${meal.dateTime}" name="dateTime" required></dd>
-        </dl>
-        <dl>
-            <dt>Description:</dt>
+            <dt>Введите название ресторана:</dt>
             <dd><input type="text" value="${meal.description}" size=40 name="description" required></dd>
         </dl>
         <dl>
-            <dt>Calories:</dt>
+
+        </dl>
+        <dl>
+            <dt>Введите рейтинг:</dt>
             <dd><input type="number" value="${meal.calories}" name="calories" required></dd>
         </dl>
         <button type="submit">Save</button>

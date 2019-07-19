@@ -13,9 +13,9 @@ public class Voice extends AbstractBaseEntity {
     private LocalDateTime localDateTime;//дата когда проголосовали
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cafe_id", nullable = false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     @NotNull
-    private Cafe cafe;//айди кафе за которое проголосовали
+    private Restaurant restaurant;//айди кафе за которое проголосовали
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -43,12 +43,12 @@ public class Voice extends AbstractBaseEntity {
         this.localDateTime = localDateTime;
     }
 
-    public Cafe getCafe() {
-        return cafe;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setCafe(Cafe cafe) {
-        this.cafe = cafe;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public User getUser() {

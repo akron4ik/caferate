@@ -1,17 +1,17 @@
 DELETE FROM user_roles;
-DELETE FROM cafes;
+DELETE FROM restaurants;
 DELETE FROM users;
 DELETE FROM meals;
 DELETE FROM voices;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
-INSERT INTO users (name, appreciated) VALUES
-  ('Admin', false ),
-  ('Tom', false ),
-  ('Homer', false ),
-  ('Bart', false ),
-  ('Liza', false ),
-  ('Meggi', false );
+INSERT INTO users (name) VALUES
+  ('Admin'),
+  ('Tom'),
+  ('Homer' ),
+  ('Bart' ),
+  ('Liza'),
+  ('Meggi');
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ADMIN', 100000),
@@ -22,14 +22,14 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('USER', 100005);
 
 
-INSERT INTO cafes (id, description, rating) VALUES
-  (100006,'Капри', 100 ),
-  (100007,'Ле Дюк', 200),
-  (100008,'Шиннок', 300),
-  (100009,'Шоколадница', 555),
-  (100010,'МакДак', 400);
+INSERT INTO restaurants (description, rating) VALUES
+  ('Капри', 100 ),
+  ('Ле Дюк', 200),
+  ('Шиннок', 300),
+  ('Шоколадница', 555),
+  ('МакДак', 400);
 
-INSERT INTO meals (name, date_time, price, cafe_id) VALUES
+INSERT INTO meals (name, date_time, price, restaurant_id) VALUES
   ('Цезарь', '2015-06-01 10:00:00', 350.50, 100006),
   ('Спагетти', '2015-06-01 10:00:00', 500.0, 100006),
   ('Шашлык', '2015-06-01 10:00:00', 440.8, 100006),
@@ -43,7 +43,7 @@ INSERT INTO meals (name, date_time, price, cafe_id) VALUES
   ('Мясо по-французки', '2015-06-01 10:00:00', 770.3, 100009),
   ('Каре ягненка', '2015-06-01 10:00:00', 885.5, 100009);
 
-INSERT INTO voices (date_time, cafe_id, user_id) VALUES
+INSERT INTO voices (date_time, restaurant_id, user_id) VALUES
   ('2015-06-01 10:00:00', 100006, 100001),
   ('2015-06-01 10:00:00', 100006, 100002),
   ('2015-06-01 10:00:00', 100007, 100003),

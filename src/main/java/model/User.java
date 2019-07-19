@@ -14,9 +14,6 @@ public class User extends AbstractBaseEntity{
     @Column(name = "name")
     private String name;//имя
 
-    @Column(name = "appreciated")
-    private boolean appreciated;//проголосовал
-
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
@@ -27,17 +24,16 @@ public class User extends AbstractBaseEntity{
     }
 
     public User(User u){
-        this(u.getId(), u.getName(), u.isAppreciated(), u.getRoles());
+        this(u.getId(), u.getName(), u.getRoles());
 
     }
-    public User(int id, String name, boolean appreciated, Role role, Role... roles){
-        this(id, name, appreciated, EnumSet.of(role, roles));
+    public User(int id, String name, Role role, Role... roles){
+        this(id, name,  EnumSet.of(role, roles));
     }
 
-    public User(Integer id, String name, boolean appreciated, Collection<Role> roles) {
+    public User(Integer id, String name, Collection<Role> roles) {
         super(id);
         this.name = name;
-        this.appreciated = appreciated;
         setRoles(roles);
 
     }
@@ -50,13 +46,6 @@ public class User extends AbstractBaseEntity{
         this.name = name;
     }
 
-    public boolean isAppreciated() {
-        return appreciated;
-    }
-
-    public void setAppreciated(boolean appreciated) {
-        this.appreciated = appreciated;
-    }
 
     public Set<Role> getRoles() {
         return roles;
@@ -70,8 +59,6 @@ public class User extends AbstractBaseEntity{
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", appreciated=" + appreciated +
-                '}';
+                ", name='" + name +"";
     }
 }

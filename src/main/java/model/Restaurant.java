@@ -1,31 +1,34 @@
 package model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "cafes")
-public class Cafe extends AbstractBaseEntity {
+@Table(name = "restaurants")
+public class Restaurant extends AbstractBaseEntity {
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "rating")
-    private int rating;
+    private Integer rating;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cafe")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
     private List<Meal> meals;
 
-    public Cafe() {
+    public Restaurant() {
     }
 
-    public Cafe (String name, int rating ){
+    public Restaurant(String name, Integer rating ){
         this(null, name, rating);
     }
 
+    public Restaurant(String name ){
+        this(null, name, null);
+    }
 
-    public Cafe(Integer id, String name, int rating) {
+
+    public Restaurant(Integer id, String name, Integer rating) {
         super(id);
         this.description = name;
         this.rating = rating;
@@ -39,11 +42,11 @@ public class Cafe extends AbstractBaseEntity {
         this.description = name;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 
@@ -57,7 +60,7 @@ public class Cafe extends AbstractBaseEntity {
 
     @Override
     public String toString() {
-        return "Cafe{" +
+        return "Restaurant{" +
                 "id=" + id +
                 ", name='" + description + '\'' +
                 ", rating=" + rating +

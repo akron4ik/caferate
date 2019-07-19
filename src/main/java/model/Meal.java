@@ -21,9 +21,9 @@ public class Meal extends AbstractBaseEntity {
     private double price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cafe_id", nullable = false)
+    @JoinColumn(name = "restaurant_id", nullable = false)
     @NotNull
-    private Cafe cafe;//для получения кафе ай ди
+    private Restaurant restaurant;//для получения кафе ай ди
 
     public Meal() {
     }
@@ -67,6 +67,7 @@ public class Meal extends AbstractBaseEntity {
         return this.id == null;
     }
 
-
-
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
 }

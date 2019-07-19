@@ -1,16 +1,23 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: aron4ik
+  Date: 2019-07-19
+  Time: 17:51
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--<%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>--%>
 <html>
 <head>
-    <title>All Users</title>
+    <title>All Voices</title>
 </head>
 <body>
 <section>
     <h3><a href="index.jsp">Home</a></h3>
     <hr/>
-    <h2>All Users</h2>
+    <h2>All Voices</h2>
 
     <hr/>
     <a href="restaurants?action=create">Add Cafe</a>
@@ -19,17 +26,19 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Имя</th>
-            <th>Роль</th>
+            <th>Дата</th>
+            <th>Кто проголосовал</th>
+            <th>За кого проголосовали</th>
 
         </tr>
         </thead>
-        <c:forEach items="${users}" var="user">
+        <c:forEach items="${voices}" var="voice">
             <tr>
 
-                <td>${user.id}</td>
-                <td>${user.name}</td>
-                <td>${user.roles}</td>
+                <td>${voice.id}</td>
+                <td>${voice.localDateTime}</td>
+                <td>${voice.user.id}</td>
+                <td>${voice.restaurant.id}</td>
 
             </tr>
         </c:forEach>

@@ -1,35 +1,32 @@
 package repository.datajpa;
 
-import model.Cafe;
 import model.Meal;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
 @Transactional(readOnly = true)
-public interface CrudCafeRepository extends JpaRepository<Cafe, Integer> {
+public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
 
     @Override
     @Transactional
-    Cafe save(Cafe cafe);
+    Meal save(Meal meal);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Cafe c WHERE c.id=:id")
-    int delete(int id);
+    @Query("DELETE FROM Meal m WHERE m.id=:id")
+    int delete(@Param("id") int id);
 
-    @Query("SELECT c FROM Cafe c WHERE c.id=:id")
-    Cafe get(int id);
+    @Query("SELECT m FROM Meal m WHERE m.id=:id")
+    Meal get(@Param("id") int id);
 
-    @Query("SELECT c FROM Cafe c")
-    List<Cafe> getAll();
+    @Query("SELECT m FROM Meal m")
+    List<Meal> getAll();
 
-    @EntityGraph(attributePaths = {"meals", "roles"})
-    @Query("SELECT c FROM Cafe c WHERE c.id=?1")
-    Cafe getWithMeals(int id);
+
 }
