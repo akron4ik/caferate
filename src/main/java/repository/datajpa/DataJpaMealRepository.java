@@ -28,4 +28,8 @@ public class DataJpaMealRepository {
         return crudMealRepository.getAll();
     }
 
+    public List<Meal> getAllMealByRestaurantId(int id) {
+        return crudMealRepository.getAllMealByRestaurantId(id);
+    }
+
 }
