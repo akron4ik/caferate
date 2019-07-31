@@ -11,7 +11,7 @@
     <h3><a href="index.jsp">Home</a></h3>
     <hr>
     <%--<h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>--%>
-    <jsp:useBean id="restaurant" type="model.Restaurant" scope="request"/>
+    <jsp:useBean id="restaurant" type="workplace.model.Restaurant" scope="request"/>
     <form method="post" action="restaurants">
         <input type="hidden" name="id" value="${restaurant.id}">
         <dl>

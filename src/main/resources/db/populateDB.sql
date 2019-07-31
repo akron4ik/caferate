@@ -8,8 +8,8 @@ ALTER SEQUENCE global_seq RESTART WITH 100000;
 INSERT INTO users (name) VALUES
   ('Admin'),
   ('Tom'),
-  ('Homer' ),
-  ('Bart' ),
+  ('Homer'),
+  ('Bart'),
   ('Liza'),
   ('Meggi');
 

@@ -1,17 +1,16 @@
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS user_roles;
-DROP TABLE IF EXISTS restaurants CASCADE;
-DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS meals CASCADE;
-DROP TABLE IF EXISTS voices CASCADE;
-DROP SEQUENCE IF EXISTS glob_seq CASCADE ;
+DROP TABLE IF EXISTS restaurants;
+DROP TABLE IF EXISTS meals;
+DROP TABLE IF EXISTS voices ;
+DROP SEQUENCE IF EXISTS glob_seq;
 
-CREATE SEQUENCE glob_seq START WITH 100000;
+CREATE SEQUENCE glob_seq AS INTEGER START WITH 100000;
 
 CREATE TABLE users
 (
   id               INTEGER PRIMARY KEY DEFAULT nextval('glob_seq'),
   name             VARCHAR                 NOT NULL
-
 );
 
 CREATE TABLE user_roles
@@ -24,7 +23,7 @@ CREATE TABLE user_roles
 
 CREATE TABLE restaurants
 (
-  id          INTEGER PRIMARY KEY DEFAULT nextval('glob_seq'),
+  id          INTEGER PRIMARY KEY DEFAULT nextval('glob_seq') ,
   description TEXT      NOT NULL,
   rating   INT       NOT NULL
 );
@@ -46,7 +45,7 @@ CREATE TABLE voices
    date_time TIMESTAMP NOT NULL,
    restaurant_id INTEGER NOT NULL,
    user_id INTEGER NOT NULL,
-   FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
-   FOREIGN KEY (user_id) REFERENCES users(id)
+   FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE ,
+   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 /*CREATE UNIQUE INDEX uniq_datetime_to_userid ON voices(date_time, user_id);*/
