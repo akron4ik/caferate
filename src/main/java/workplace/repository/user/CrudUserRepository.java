@@ -1,4 +1,4 @@
-package workplace.repository.datajpa;
+package workplace.repository.user;
 
 import workplace.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

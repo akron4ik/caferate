@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "meals")
+@Table(name = "meals", uniqueConstraints = @UniqueConstraint(columnNames = {"restaurant_id", "name"}, name = "meals_unique_name_idx"))
 public class Meal extends AbstractBaseEntity {
 
     @Column(name = "name")
@@ -23,20 +23,22 @@ public class Meal extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @NotNull
-    private Restaurant restaurant;//для получения кафе ай ди
+    private Restaurant restaurant;
 
     public Meal() {
     }
 
-    public Meal(String name, LocalDateTime dateTime, double price){
-        this(null, name, dateTime, price);
-    }
 
-    public Meal(Integer id, String name, LocalDateTime dateTime, double price) {
+    public Meal(Integer id, String name, LocalDateTime dateTime, double price, Restaurant restaurant) {
         super(id);
         this.name = name;
         this.dateTime = dateTime;
         this.price = price;
+        this.restaurant = restaurant;
+    }
+
+    public Meal(Meal meal){
+        this(meal.getId(), meal.getName(), meal.getDateTime(), meal.getPrice(),  meal.getRestaurant());
     }
 
     public String getName() {
@@ -69,6 +71,10 @@ public class Meal extends AbstractBaseEntity {
 
     public Restaurant getRestaurant() {
         return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     @Override

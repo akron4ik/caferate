@@ -1,4 +1,4 @@
-package workplace.repository.datajpa;
+package workplace.repository.restaurant;
 
 import workplace.model.Restaurant;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -36,4 +37,7 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     @EntityGraph(attributePaths = {"meals"})
     @Query("SELECT c FROM Restaurant c")
     List<Restaurant> getAllRestaurantsWithMeals();
+
+    @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.meals m WHERE m.dateTime=:dateTime")
+    List<Restaurant> getAllRestaurantsByDate(@Param("dateTime") LocalDate localDate);
 }

@@ -5,34 +5,35 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "voices")
+@Table(name = "voices", uniqueConstraints = @UniqueConstraint(columnNames = {"date_time", "user_id"}, name = "voices_unique_datetime_idx"))
 public class Voice extends AbstractBaseEntity {
 
     @Column(name = "date_time")
     @NotNull
-    private LocalDateTime localDateTime;//дата когда проголосовали
+    private LocalDateTime localDateTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @NotNull
-    private Restaurant restaurant;//айди кафе за которое проголосовали
+    private Restaurant restaurant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     @NotNull
-    private User user;//айди юзера который проголосовал
+    private User user;
 
     public Voice(){
-
     }
 
-    public Voice(LocalDateTime localDateTime){
-        this(null, localDateTime);
+    public Voice(Voice v){
+        this(v.getId(), v.getLocalDateTime(), v.getUser(), v.getRestaurant());
     }
 
-    public Voice(Integer id, LocalDateTime localDateTime){
+    public Voice(Integer id, LocalDateTime localDateTime, User user, Restaurant restaurant){
         super(id);
         this.localDateTime = localDateTime;
+        this.user = user;
+        this.restaurant = restaurant;
     }
 
     public LocalDateTime getLocalDateTime() {
@@ -57,5 +58,15 @@ public class Voice extends AbstractBaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Voice{" +
+                "localDateTime=" + localDateTime +
+                ", restaurant=" + restaurant +
+                ", user=" + user +
+                ", id=" + id +
+                '}';
     }
 }

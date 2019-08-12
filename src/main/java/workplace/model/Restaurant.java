@@ -4,66 +4,60 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "restaurants")
+@Table(name = "restaurants", uniqueConstraints = @UniqueConstraint(columnNames = "name", name = "restaurants_unique_name_idx"))
 public class Restaurant extends AbstractBaseEntity {
 
-    @Column(name = "description")
-    private String description;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "rating")
-    private Integer rating;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "restaurant")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
     private List<Meal> meals;
 
     public Restaurant() {
     }
 
-    public Restaurant(String name, Integer rating ){
-        this(null, name, rating);
+    public Restaurant(Restaurant restaurant ){
+        this(restaurant.getId(), restaurant.getName());
     }
 
-    public Restaurant(String name ){
-        this(null, name, null);
-    }
-
-
-    public Restaurant(Integer id, String name, Integer rating) {
+    public Restaurant(Integer id, String name) {
         super(id);
-        this.description = name;
-        this.rating = rating;
+        this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public Restaurant (Integer id, String name, List<Meal> meals){
+        super(id);
+        this.name = name;
+        this.meals = meals;
     }
 
-    public void setDescription(String name) {
-        this.description = name;
+    public String getName() {
+        return name;
     }
 
-    public Integer getRating() {
-        return rating;
-    }
-
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
-
-    public boolean isNew() {
-        return this.id == null;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Meal> getMeals() {
         return meals;
     }
 
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
+    }
+
+    public boolean isNew() {
+        return this.id == null;
+    }
+
+
     @Override
     public String toString() {
         return "Restaurant{" +
-                "id=" + id +
-                ", name='" + description + '\'' +
-                ", rating=" + rating +
+                "name='" + name + '\'' +
+                ", meals=" + meals +
+                ", id=" + id +
                 '}';
     }
 }

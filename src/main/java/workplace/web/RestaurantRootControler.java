@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import workplace.repository.datajpa.DataJpaMealRepository;
-import workplace.repository.datajpa.DataJpaRestaurantRepository;
-import workplace.repository.datajpa.DataJpaUserRepository;
-import workplace.repository.datajpa.DataJpaVoiceRepository;
+import workplace.repository.meal.DataJpaMealRepository;
+import workplace.repository.restaurant.DataJpaRestaurantRepository;
+import workplace.repository.user.DataJpaUserRepository;
+import workplace.repository.voice.DataJpaVoiceRepository;
 
 
 @Controller

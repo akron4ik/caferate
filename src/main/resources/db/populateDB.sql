@@ -3,15 +3,15 @@ DELETE FROM restaurants;
 DELETE FROM users;
 DELETE FROM meals;
 DELETE FROM voices;
-ALTER SEQUENCE global_seq RESTART WITH 100000;
+ALTER SEQUENCE GLOBAL_SEQ RESTART WITH 100000;
 
-INSERT INTO users (name) VALUES
-  ('Admin'),
-  ('Tom'),
-  ('Homer'),
-  ('Bart'),
-  ('Liza'),
-  ('Meggi');
+INSERT INTO users (name, email, password, registered) VALUES
+  ('Admin', 'admin@admin.ru', 'admin', '2019-08-08 10:00:00.000000'),
+  ('Tom', 'tom@tom.ru', 'tom', '2019-08-09 10:00:00.000000'),
+  ('Homer', 'homer@homer.ru', 'homer', '2019-08-02 10:00:00.000000'),
+  ('Bart', 'bart@bart.ru', 'bart', '2019-08-01 10:00:00.000000'),
+  ('Liza', 'liza@liza.ru', 'liza', '2019-08-04 10:00:00.000000'),
+  ('Meggi', 'meggi@meggi.ru', 'meggi', '2019-08-08 10:00:00.000000');
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ADMIN', 100000),
@@ -22,12 +22,12 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('USER', 100005);
 
 
-INSERT INTO restaurants (description, rating) VALUES
-  ('Капри', 100 ),
-  ('Ле Дюк', 200),
-  ('Шиннок', 300),
-  ('Шоколадница', 555),
-  ('МакДак', 400);
+INSERT INTO restaurants (name) VALUES
+  ('Капри' ),
+  ('Ле Дюк'),
+  ('Шиннок'),
+  ('Шоколадница'),
+  ('МакДак');
 
 INSERT INTO meals (name, date_time, price, restaurant_id) VALUES
   ('Цезарь', '2015-06-01 10:00:00', 350.50, 100006),

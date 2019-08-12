@@ -12,14 +12,8 @@
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="objectMapper"/>
             </bean>
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                <!--                <property name="supportedMediaTypes">-->
-                <!--                    <list>-->
-                <!--                        <value>text/plain;charset=UTF-8</value>-->
-                <!--                        <value>text/html;charset=UTF-8</value>-->
-                <!--                    </list>-->
-                <!--                </property>-->
-            </bean>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+
         </mvc:message-converters>
     </mvc:annotation-driven><mvc:annotation-driven/>
 
@@ -31,22 +25,11 @@
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp"/>
+    <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean" id="conversionService">
+        <property name="formatters">
+            <set>
 
-<!--
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
-          p:cacheSeconds="60"
-          p:defaultEncoding="UTF-8">
-        <property name="basenames">
-            <list>
-                <value>messages/app</value>
-            </list>
+            </set>
         </property>
-    </bean>
--->
-    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-          p:cacheSeconds="5"
-          p:defaultEncoding="UTF-8">
-        <property name="basenames" value="file:///#{systemEnvironment['CAFERATE_ROOT']}/config/messages/app"/>
-        <property name="fallbackToSystemLocale" value="false"/>
     </bean>
 </beans>

@@ -1,9 +1,10 @@
-package workplace.repository.datajpa;
+package workplace.repository.restaurant;
 
 import workplace.model.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -28,8 +29,13 @@ public class DataJpaRestaurantRepository {
     public List<Restaurant> getAll() {
         return crudRepository.getAll();
     }
+
     public Restaurant getWithMeal(int id){
         return crudRepository.getWithMeals(id);
+    }
+
+    public List<Restaurant> getAllRestaurantsByDate(LocalDate localDate){
+        return crudRepository.getAllRestaurantsByDate(localDate);
     }
 
     public List<Restaurant> getAllRestaurantsWithMeals(){

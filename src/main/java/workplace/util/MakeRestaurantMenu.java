@@ -3,10 +3,10 @@ package workplace.util;
 import workplace.model.Meal;
 import workplace.model.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
-import workplace.repository.datajpa.DataJpaMealRepository;
-import workplace.repository.datajpa.DataJpaRestaurantRepository;
-import workplace.repository.datajpa.DataJpaUserRepository;
-import workplace.repository.datajpa.DataJpaVoiceRepository;
+import workplace.repository.meal.DataJpaMealRepository;
+import workplace.repository.restaurant.DataJpaRestaurantRepository;
+import workplace.repository.user.DataJpaUserRepository;
+import workplace.repository.voice.DataJpaVoiceRepository;
 import workplace.to.RestaurantMenu;
 
 import java.time.LocalDate;

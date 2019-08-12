@@ -4,7 +4,7 @@ import org.springframework.test.context.ActiveProfiles;
 import workplace.model.Meal;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import workplace.repository.datajpa.CrudMealRepository;
+import workplace.repository.meal.CrudMealRepository;
 
 import static caferate.MealTestData.MEAL_1;
 import static caferate.MealTestData.assertMatch;
