@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spring.version>5.1.7.RELEASE</spring.version>
+        <spring.version>5.1.8.RELEASE</spring.version>
         <spring-data-jpa.version>2.1.9.RELEASE</spring-data-jpa.version>
         <spring.security.version>5.1.6.RELEASE</spring.security.version>
         <jackson-json.version>2.9.9</jackson-json.version>
@@ -21,7 +21,7 @@
 
         <!-- Logging -->
         <logback.version>1.2.3</logback.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <slf4j.version>1.7.26</slf4j.version>
 
         <!--DB-->
         <postgresql.version>42.2.6</postgresql.version>
@@ -40,7 +40,7 @@
         <ehcache.version>3.7.1</ehcache.version>
 
         <!--DTO-->
-        <modelmapper.version>2.3.0</modelmapper.version>
+       <!-- <modelmapper.version>2.3.0</modelmapper.version>-->
 
     </properties>
 
@@ -76,12 +76,6 @@
                         <file.encoding>UTF-8</file.encoding>
                         <spring.profiles.active>tomcat</spring.profiles.active>
                     </systemProperties>
-                    <!--<dependencies>
-                        <dependency>
-                            <groupId>org.postgresql</groupId>
-                            <artifactId>postgresql</artifactId>
-                        </dependency>
-                    </dependencies>-->
                 </container>
                 <configuration>
                     <configfiles>
@@ -115,6 +109,12 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -165,11 +165,11 @@
             <artifactId>hsqldb</artifactId>
             <version>2.5.0</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>${modelmapper.version}</version>
-        </dependency>
+        </dependency>-->
 
         <!--- ORM -->
         <dependency>
@@ -259,15 +259,16 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
             <version>${hamcrest.version}</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

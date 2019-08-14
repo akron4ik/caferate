@@ -33,11 +33,11 @@ public class RestaurantRootControler {
         return "restaurants";
     }
 
-    @GetMapping("/meals")
+    /*@GetMapping("/meals")
     public String meals(Model model){
         model.addAttribute("meals", mealRepository.getAll());
         return "meals";
-    }
+    }*/
 
     @GetMapping("/users")
     public String users(Model model){
@@ -45,11 +45,11 @@ public class RestaurantRootControler {
         return "users";
     }
 
-    @GetMapping("/voices")
+    /*@GetMapping("/voices")
     public String voices(Model model){
         model.addAttribute("voices", voiceRepository.getAll());
         return "voices";
-    }
+    }*/
 
 
 }

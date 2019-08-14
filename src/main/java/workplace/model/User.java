@@ -1,8 +1,11 @@
 package workplace.model;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import org.hibernate.annotations.Cache;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,13 +14,17 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email", name = "users_unique_email_idx"))
 public class User extends AbstractBaseEntity implements Serializable {
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
+    @Size(min = 2, max = 200)
+    @NotBlank
     private String name;
 
     @Column(name = "email", unique = true)
@@ -26,22 +33,24 @@ public class User extends AbstractBaseEntity implements Serializable {
     @Size(min = 4, max = 200)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     @NotBlank
-    @Size(min = 5, max = 200)
+    @Size(min = 1, max = 200)
     private String password;
 
-    @Column(name = "registered")
+    @Column(name = "registered", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @NotNull
     private LocalDateTime registered;
 
-    @Column(name = "enabled", nullable = false)
+    @Column(name = "enabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean enabled;
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     @ElementCollection(fetch = FetchType.EAGER)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @BatchSize(size = 200)
     private Set<Role> roles;
 
     public User() {
@@ -119,7 +128,31 @@ public class User extends AbstractBaseEntity implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", name='" + name +"";
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", registered=" + registered +
+                ", enabled=" + enabled +
+                ", roles=" + roles +
+                ", id=" + id +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return enabled == user.enabled &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(registered, user.registered) &&
+                Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, email, password, registered, enabled, roles);
     }
 }

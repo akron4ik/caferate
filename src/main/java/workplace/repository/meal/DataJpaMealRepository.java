@@ -18,26 +18,24 @@ public class DataJpaMealRepository {
     }
 
     public boolean delete(int id){
-        return crudMealRepository.delete(id) != 0;
+        return crudMealRepository.deleteMealById(id) != 0;
     }
 
     public Meal get(int id){
-        return crudMealRepository.get(id);
+        return crudMealRepository.getMealById(id);
     }
 
     public Meal getMealWithRestaurant(int id){
         return crudMealRepository.getMealByIdWithRestaurant(id);
     }
-    public List<Meal> getAll(){
-        return crudMealRepository.getAll();
+
+    public List<Meal> getAll(int id){
+        return crudMealRepository.getMealsByRestaurantId(id);
     }
 
-    public List<Meal> getAllMealByDate(int restaurantId, LocalDate localDate){
-        return crudMealRepository.getAllMealsByDateAndRestaurantId(restaurantId, localDate);
+    public List<Meal> getMealByDateAndRestaurantId(int restaurantId, LocalDate localDate){
+        return crudMealRepository.getMealsByDateAndRestaurantId(restaurantId, localDate);
     }
 
-    public List<Meal> getAllMealByRestaurantId(int id) {
-        return crudMealRepository.getAllMealByRestaurantId(id);
-    }
 
 }

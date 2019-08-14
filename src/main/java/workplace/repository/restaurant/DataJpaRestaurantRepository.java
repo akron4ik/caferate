@@ -23,7 +23,7 @@ public class DataJpaRestaurantRepository {
     }
 
     public Restaurant get(int id) {
-        return crudRepository.get(id);
+        return crudRepository.getRestaurantById(id);
     }
 
     public List<Restaurant> getAll() {
@@ -35,10 +35,10 @@ public class DataJpaRestaurantRepository {
     }
 
     public List<Restaurant> getAllRestaurantsByDate(LocalDate localDate){
-        return crudRepository.getAllRestaurantsByDate(localDate);
+        return crudRepository.getRestaurantsByDate(localDate);
     }
 
     public List<Restaurant> getAllRestaurantsWithMeals(){
-        return crudRepository.getAllRestaurantsWithMeals();
+        return crudRepository.getRestaurantsWithMeals();
     }
 }

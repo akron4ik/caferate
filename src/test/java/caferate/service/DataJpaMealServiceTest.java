@@ -1,79 +1,68 @@
 package caferate.service;
 
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.BeforeEach;
 import workplace.model.Meal;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import workplace.repository.meal.CrudMealRepository;
+import workplace.service.MealService;
+import workplace.util.exception.NotFoundException;
 
-import static caferate.MealTestData.MEAL_1;
-import static caferate.MealTestData.assertMatch;
-import static workplace.Profiles.DATAJPA;
+import java.time.LocalDate;
 
-@ActiveProfiles(DATAJPA)
+import static caferate.MealTestData.*;
+import static caferate.RestaurantTestData.RESTAURANT_1;
+import static caferate.RestaurantTestData.RESTAURANT_1_ID;
+import static caferate.UserTestData.USER_2;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class DataJpaMealServiceTest extends AbstractServiceTest {
 
     @Autowired
-    CrudMealRepository mealRepository;
+    MealService mealService;
 
+    @BeforeEach
+    void setUp() throws Exception {
+        cacheManager.getCache("meals").clear();
+        jpaUtil.clear2ndLevelHibernateCache();
+    }
 
-    /*@Test
+    @Test
     void delete() throws Exception {
-        mealRepository.delete(MEAL1_ID, USER_ID);
-        assertMatch(service.getAll(USER_ID), MEAL6, MEAL5, MEAL4, MEAL3, MEAL2);
-    }
-
-    @Test
-    void deleteNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () ->
-                mealRepository.delete(1, USER_ID));
-    }
-
-    @Test
-    void deleteNotOwn() throws Exception {
-        assertThrows(NotFoundException.class, () ->
-                service.delete(MEAL1_ID, ADMIN_ID));
+        mealService.delete(MEAL_1_ID);
+        assertMatch(mealService.getAll(RESTAURANT_1_ID), MEAL_2, MEAL_3);
     }
 
     @Test
     void create() throws Exception {
-        Meal newMeal = getCreated();
-        Meal created = service.create(newMeal, USER_ID);
+        Meal newMeal = new Meal(null, "newMeal", LocalDate.of(2019,8,13), 222, RESTAURANT_1);
+        Meal created = mealService.create(newMeal);
         newMeal.setId(created.getId());
         assertMatch(newMeal, created);
-        assertMatch(service.getAll(USER_ID), newMeal, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
-    }*/
+        assertMatch(mealService.getAll(RESTAURANT_1_ID),  MEAL_1, MEAL_2, MEAL_3, newMeal);
+    }
 
     @Test
     void get() throws Exception {
-        Meal actual = mealRepository.get(100011);
+        Meal actual = mealService.get(100011);
         assertMatch(actual, MEAL_1);
     }
 
-   /* @Test
+   @Test
     void getNotFound() throws Exception {
         assertThrows(NotFoundException.class, () ->
-                service.get(1, ADMIN_ID));
-    }
-
-    @Test
-    void getNotOwn() throws Exception {
-        assertThrows(NotFoundException.class, () ->
-                service.get(MEAL1_ID, ADMIN_ID));
+                mealService.get(1));
     }
 
     @Test
     void update() throws Exception {
-        Meal updated = getUpdated();
-        service.update(updated, USER_ID);
-        assertMatch(service.get(MEAL1_ID, USER_ID), updated);
+        Meal updated = new Meal(MEAL_1);
+        updated.setName("Updated");
+        updated.setPrice(111);
+        mealService.update(new Meal(updated));
+        assertMatch(mealService.get(100011), updated);
     }
 
-    @Test
-    void updateNotFound() throws Exception {
-        NotFoundException e = assertThrows(NotFoundException.class, () -> service.update(MEAL1, ADMIN_ID));
-        assertEquals(e.getMessage(), "Not found entity with id=" + MEAL1_ID);
-    }*/
 
     /*@Test
     void getAll() throws Exception {

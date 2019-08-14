@@ -14,27 +14,22 @@ import java.util.List;
 public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
 
     @Override
+    @Modifying
     @Transactional
     Meal save(Meal meal);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Meal m WHERE m.id=:id")
-    int delete(@Param("id") int id);
+    int deleteMealById(int id);
 
-    @Query("SELECT m FROM Meal m WHERE m.id=:id")
-    Meal get(@Param("id") int id);
+    Meal getMealById( int id);
 
     @Query("SELECT m FROM Meal m JOIN FETCH m.restaurant WHERE m.id=:id")
     Meal getMealByIdWithRestaurant(@Param("id")int id);
 
-    @Query("SELECT m FROM Meal m")
-    List<Meal> getAll();
+    List<Meal> getMealsByRestaurantId(/*@Param("restaurant_id")*/ int restaurantId);
 
-    @Query("SELECT m FROM Meal m WHERE m.restaurant.id=:restaurant_id")
-    List<Meal> getAllMealByRestaurantId(@Param("restaurant_id") int id);
-
-    List<Meal> getAllMealsByDateAndRestaurantId(int restaurantId, LocalDate localDate);
+    List<Meal> getMealsByDateAndRestaurantId(int restaurantId, LocalDate localDate);
 
 
 }

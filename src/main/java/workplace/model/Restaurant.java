@@ -1,16 +1,27 @@
 package workplace.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import java.util.List;
+import java.util.Objects;
 
 @Entity
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
 @Table(name = "restaurants", uniqueConstraints = @UniqueConstraint(columnNames = "name", name = "restaurants_unique_name_idx"))
 public class Restaurant extends AbstractBaseEntity {
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
+    @Size(min = 2, max = 200)
+    @NotBlank
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
+    /*@OrderBy()*/
     private List<Meal> meals;
 
     public Restaurant() {
@@ -59,5 +70,19 @@ public class Restaurant extends AbstractBaseEntity {
                 ", meals=" + meals +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Restaurant that = (Restaurant) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(meals, that.meals);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, meals);
     }
 }

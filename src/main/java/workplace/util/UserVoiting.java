@@ -29,13 +29,13 @@ public class UserVoiting {
         return currentTime.toLocalTime();
 
     }
-    public Voice canUserVoit(Voice voice){
+    /*public Voice canUserVoit(Voice voice){
         if(isVote(LocalTime.now())){
             voiceRepository.save(voice);
         }
         return voice;
 
-    }
+    }*/
 
     public static boolean isVote(LocalTime currentTime){
         return TIME.compareTo(currentTime) < 0;

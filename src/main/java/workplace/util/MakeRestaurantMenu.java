@@ -25,7 +25,7 @@ public class MakeRestaurantMenu {
     @Autowired
     DataJpaVoiceRepository voiceRepository;
 
-    public RestaurantMenu getMenuByRestaurantId(int id){
+    /*public RestaurantMenu getMenuByRestaurantId(int id){
         Restaurant restaurant = restaurantRepository.get(id);
         List<Meal> meals = getTodaysMeals(mealRepository.getAllMealByRestaurantId(restaurant.getId()));
         Map<String, Double> mealAndPrice = new HashMap<>();
@@ -33,11 +33,11 @@ public class MakeRestaurantMenu {
             mealAndPrice.put(m.getName(),m.getPrice());
         }
         return new RestaurantMenu(restaurant.getDescription(), mealAndPrice, LocalDate.now());
-    }
+    }*/
 
-    public List<Meal> getTodaysMeals(List<Meal> meals){
+    /*public List<Meal> getTodaysMeals(List<Meal> meals){
         List<Meal> newMeals = new ArrayList<>();
         meals.stream().filter(m -> m.getDateTime().toLocalDate()==LocalDate.now()).forEach(newMeals::add);
         return newMeals;
-    }
+    }*/
 }

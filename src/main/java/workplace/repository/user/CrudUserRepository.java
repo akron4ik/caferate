@@ -12,17 +12,10 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface CrudUserRepository extends JpaRepository<User, Integer> {
 
-    @Override
     @Transactional
-    User save(User user);
+    int deleteUserById(int id);
 
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM User u WHERE u.id=:id")
-    int delete(@Param("id") int id);
-
-    @Query("SELECT u FROM User u WHERE u.id=:id")
-    User get(@Param("id") int id);
+    User getUserByEmail(String email);
 
     @Query("SELECT u FROM User u")
     List<User> getAll();

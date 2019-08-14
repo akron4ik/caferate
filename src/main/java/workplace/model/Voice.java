@@ -1,47 +1,50 @@
 package workplace.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "voices", uniqueConstraints = @UniqueConstraint(columnNames = {"date_time", "user_id"}, name = "voices_unique_datetime_idx"))
 public class Voice extends AbstractBaseEntity {
 
-    @Column(name = "date_time")
+    @Column(name = "date_time", nullable = false, columnDefinition = "DATE DEFAULT now()")
     @NotNull
-    private LocalDateTime localDateTime;
+    private LocalDate localDate;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    @NotNull
+    @JoinColumn(name = "restaurant_id",foreignKey = @ForeignKey(name = "GLOBAL_SEQ", foreignKeyDefinition = "START WITH 100000"))
     private Restaurant restaurant;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
-    @NotNull
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "GLOBAL_SEQ", foreignKeyDefinition = "START WITH 100000"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     public Voice(){
     }
 
     public Voice(Voice v){
-        this(v.getId(), v.getLocalDateTime(), v.getUser(), v.getRestaurant());
+        this(v.getId(), v.getLocalDate(), v.getRestaurant(), v.getUser());
     }
 
-    public Voice(Integer id, LocalDateTime localDateTime, User user, Restaurant restaurant){
+    public Voice(Integer id, LocalDate localDate, Restaurant restaurant, User user){
         super(id);
-        this.localDateTime = localDateTime;
-        this.user = user;
+        this.localDate = localDate;
         this.restaurant = restaurant;
+        this.user = user;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDate getLocalDate() {
+        return localDate;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
     }
 
     public Restaurant getRestaurant() {
@@ -63,10 +66,25 @@ public class Voice extends AbstractBaseEntity {
     @Override
     public String toString() {
         return "Voice{" +
-                "localDateTime=" + localDateTime +
+                "localDate=" + localDate +
                 ", restaurant=" + restaurant +
                 ", user=" + user +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Voice voice = (Voice) o;
+        return Objects.equals(localDate, voice.localDate) &&
+                Objects.equals(restaurant, voice.restaurant) &&
+                Objects.equals(user, voice.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(localDate, restaurant, user);
     }
 }
