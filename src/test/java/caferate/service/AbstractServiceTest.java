@@ -7,7 +7,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import workplace.util.JpaUtil;
+import workplace.repository.JpaUtil;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static workplace.util.ValidationUtil.getRootCause;

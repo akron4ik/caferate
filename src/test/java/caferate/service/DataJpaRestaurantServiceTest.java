@@ -1,21 +1,13 @@
 package caferate.service;
 
+import caferate.RestaurantTestData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import workplace.model.Restaurant;
 import workplace.service.RestaurantService;
+import static caferate.RestaurantTestData.*;
 
-import static caferate.MealTestData.assertMatch;
-import static caferate.RestaurantTestData.RESTAURANT_1;
-import static caferate.RestaurantTestData.RESTAURANT_1_ID;
-
-
-@SpringJUnitConfig(locations = {
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
-})
 
 public class DataJpaRestaurantServiceTest extends AbstractServiceTest {
 
@@ -24,8 +16,13 @@ public class DataJpaRestaurantServiceTest extends AbstractServiceTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        cacheManager.getCache("restaurants").clear();
+        cacheManager.getCache("meals").clear();
         jpaUtil.clear2ndLevelHibernateCache();
+    }
+
+    @Test
+    void getAll() throws Exception{
+       assertMatch(restaurantService.getAll(), RESTAURANT_1, RESTAURANT_2,RESTAURANT_3, RESTAURANT_4, RESTAURANT_5);
     }
 
     @Test

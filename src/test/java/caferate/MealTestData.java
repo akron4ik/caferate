@@ -14,7 +14,7 @@ public class MealTestData {
     public static final int MEAL_1_ID = 100011;
 
     public static final Meal MEAL_1 = new Meal(100011, "Цезарь", LocalDate.of(2015,06, 01), 350.5, RESTAURANT_1);
-    public static final Meal MEAL_2 = new Meal(100012, "Cпагетти", LocalDate.of(2015,06, 01), 500.5, RESTAURANT_1);
+    public static final Meal MEAL_2 = new Meal(100012, "Ризотто", LocalDate.of(2015,06, 01), 500.5, RESTAURANT_1);
     public static final Meal MEAL_3 = new Meal(100013, "Шашлык", LocalDate.of(2015,06, 01), 440.8, RESTAURANT_1);
     public static final Meal MEAL_4 = new Meal(100014, "Яичница", LocalDate.of(2015,06, 01), 30.5, RESTAURANT_2);
     public static final Meal MEAL_5 = new Meal(100015, "Фетучини", LocalDate.of(2015,06, 01), 600.3, RESTAURANT_2);
@@ -39,6 +39,7 @@ public class MealTestData {
 
     public static <T> void assertMatch (Iterable<T> actual, Iterable<T> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("restaurant").isEqualTo(expected);
+
 
     }
 

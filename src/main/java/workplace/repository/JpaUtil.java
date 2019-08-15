@@ -1,4 +1,4 @@
-package workplace.util;
+package workplace.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

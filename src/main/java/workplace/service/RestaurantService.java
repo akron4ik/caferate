@@ -1,6 +1,8 @@
 package workplace.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import workplace.model.Restaurant;
 import workplace.repository.restaurant.DataJpaRestaurantRepository;
@@ -17,6 +19,7 @@ public class RestaurantService {
         this.restaurantRepository = restaurantRepository;
     }
 
+    @CacheEvict(value = "meals", allEntries = true)
     public Restaurant create(Restaurant restaurant){
         return restaurantRepository.save(restaurant);
     }
@@ -25,14 +28,17 @@ public class RestaurantService {
         return restaurantRepository.get(id);
     }
 
+    @CacheEvict(value = "meals", allEntries = true)
     public void delete(int id){
         restaurantRepository.delete(id);
     }
 
+    @CacheEvict(value = "meals", allEntries = true)
     public void update(Restaurant restaurant){
         restaurantRepository.save(restaurant);
     }
 
+    @Cacheable("meals")
     public List<Restaurant> getAll(){
        return restaurantRepository.getAll();
     }

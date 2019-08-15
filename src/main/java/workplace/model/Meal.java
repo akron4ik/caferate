@@ -102,8 +102,6 @@ public class Meal extends AbstractBaseEntity {
                 '}';
     }
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,6 +1,8 @@
 package workplace.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import workplace.model.Meal;
@@ -21,15 +23,18 @@ public class MealService {
         this.mealRepository = mealRepository;
     }
 
+    @CacheEvict(value = "meals", allEntries = true)
     public Meal create(Meal meal){
         Assert.notNull(meal, "user must not be null");
         return mealRepository.save(meal);
     }
 
+    @CacheEvict(value = "meals", allEntries = true)
     public void delete(int id){
         checkNotFoundWithId(mealRepository.delete(id),id);
     }
 
+    @CacheEvict(value = "meals", allEntries = true)
     public void update(Meal meal){
         Assert.notNull(meal, "user must not be null");
         checkNotFoundWithId(mealRepository.save(meal), meal.getId());
@@ -39,6 +44,7 @@ public class MealService {
         return checkNotFoundWithId(mealRepository.get(id), id);
     }
 
+    @Cacheable("meals")
     public List<Meal> getAll(int restaurantid){
         return mealRepository.getAll(restaurantid);
     }

@@ -12,8 +12,6 @@ import java.time.LocalDate;
 import static caferate.MealTestData.*;
 import static caferate.RestaurantTestData.RESTAURANT_1;
 import static caferate.RestaurantTestData.RESTAURANT_1_ID;
-import static caferate.UserTestData.USER_2;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DataJpaMealServiceTest extends AbstractServiceTest {
