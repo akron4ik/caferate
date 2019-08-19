@@ -3,15 +3,15 @@ package workplace.to;
 import java.time.LocalDate;
 import java.util.Map;
 
-public class RestaurantMenu {
+public class RestaurantTo {
     String restaurantName;
     Map<String, Double> menu;
     LocalDate localDate;
 
-    public RestaurantMenu() {
+    public RestaurantTo() {
     }
 
-    public RestaurantMenu(String restaurantName, Map<String, Double> menu, LocalDate localDate) {
+    public RestaurantTo(String restaurantName, Map<String, Double> menu, LocalDate localDate) {
         this.restaurantName = restaurantName;
         this.menu = menu;
         this.localDate = localDate;

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -22,14 +23,17 @@ public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
     @Transactional
     int deleteMealById(int id);
 
+    @Query("SELECT m FROM Meal m")
+    List<Meal> getAll();
+
     Meal getMealById( int id);
 
     @Query("SELECT m FROM Meal m JOIN FETCH m.restaurant WHERE m.id=:id")
     Meal getMealByIdWithRestaurant(@Param("id")int id);
 
-    List<Meal> getMealsByRestaurantId(/*@Param("restaurant_id")*/ int restaurantId);
+    List<Meal> getMealsByRestaurantId(int restaurantId);
 
-    List<Meal> getMealsByDateAndRestaurantId(int restaurantId, LocalDate localDate);
+    List<Meal> getMealsByDateAndRestaurantId(@NotNull LocalDate date, Integer restaurant_id);
 
 
 }

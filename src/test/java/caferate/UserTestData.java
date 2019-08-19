@@ -11,6 +11,9 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTestData {
+    public static final int USER_ID = 100001;
+
+
     public static final User USER_1 = new User(100000, "Admin", "admin@admin.ru", "admin", LocalDateTime.of(2019,8,8, 10,00), true, Collections.singleton(Role.ADMIN));
     public static final User USER_2 = new User(100001, "Tom", "tom@tom.ru", "tom", LocalDateTime.of(2019,8,9, 10,00), true, Collections.singleton(Role.USER));
     public static final User USER_3 = new User(100002, "Homer", "homer@homer.ru", "homer", LocalDateTime.of(2019,8,2, 10,00), true, Collections.singleton(Role.USER));

@@ -15,8 +15,11 @@ public interface CrudVoiceRepository extends JpaRepository<Voice, Integer> {
 
     Voice getVoiceByIdAndUser_Id(int id, int userId);
 
+
     @Transactional
-    int deleteVoiceByIdAndAndUser_Id(int id, int userId);
+    int deleteVoiceByIdAndUser_id(int id, int userId);
+
+
 
     List<Voice> getAllByUser_Id(int userId);
 

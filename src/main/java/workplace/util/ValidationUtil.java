@@ -2,7 +2,10 @@ package workplace.util;
 
 
 
+import workplace.HasId;
 import workplace.util.exception.NotFoundException;
+
+import java.time.LocalDateTime;
 
 public class ValidationUtil {
 
@@ -28,7 +31,12 @@ public class ValidationUtil {
         }
     }
 
-    /*public static void checkNew(HasId bean) {
+    public static void checkTime(LocalDateTime localDateTime){
+        /*if(localDateTime.isAfter())*/
+    }
+
+
+    public static void checkNew(HasId bean) {
         if (!bean.isNew()) {
             throw new IllegalArgumentException(bean + " must be new (id=null)");
         }
@@ -41,7 +49,7 @@ public class ValidationUtil {
         } else if (bean.id() != id) {
             throw new IllegalArgumentException(bean + " must be with id=" + id);
         }
-    }*/
+    }
 
     //  http://stackoverflow.com/a/28565320/548473
     public static Throwable getRootCause(Throwable t) {

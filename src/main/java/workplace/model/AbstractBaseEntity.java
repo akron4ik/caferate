@@ -36,7 +36,7 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
         return this.id == null;
     }
 
-    /*@Override
+    @Override
     public String toString() {
         return getClass().getSimpleName() + ":" + id;
     }
@@ -56,5 +56,5 @@ public abstract class AbstractBaseEntity implements Persistable<Integer> {
     @Override
     public int hashCode() {
         return id == null ? 0 : id;
-    }*/
+    }
 }

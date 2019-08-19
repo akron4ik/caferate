@@ -12,10 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -60,6 +57,10 @@ public class User extends AbstractBaseEntity implements Serializable {
         this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.getRegistered(), u.isEnabled() ,u.getRoles());
 
     }
+
+    /*public User(Integer id, String name, String email, String password, Role... roles) {
+        this(id, name, email, password, new Date(), true, Collections.singleton(roles));
+    }*/
 
     public User(Integer id, String name, String email, String password, LocalDateTime registered, boolean enabled, Collection<Role> roles) {
         super(id);

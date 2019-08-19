@@ -45,16 +45,18 @@ public class MealService {
     }
 
     @Cacheable("meals")
-    public List<Meal> getAll(int restaurantid){
-        return mealRepository.getAll(restaurantid);
+    public List<Meal> getAllByRestaurantId(int restaurantid){
+        return mealRepository.getAllByRestaurantId(restaurantid);
     }
+
+    public List<Meal> getAll(){return mealRepository.getAll();}
 
     public Meal getMealWithRestaurant(int id){
         return mealRepository.getMealWithRestaurant(id);
     }
 
-    public List<Meal> getMealsByDate(int restaurantId, LocalDate localDate){
-       return mealRepository.getMealByDateAndRestaurantId(restaurantId, localDate);
+    public List<Meal> getMealsByDate(LocalDate localDate, int restaurantId){
+       return mealRepository.getMealByDateAndRestaurantId(localDate, restaurantId);
     }
 
 }

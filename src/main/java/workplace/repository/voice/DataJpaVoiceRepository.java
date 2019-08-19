@@ -31,8 +31,9 @@ public class DataJpaVoiceRepository {
         }
     }
 
+    @Transactional
     public boolean delete(int id, int userId) {
-        return voiceRepository.deleteVoiceByIdAndAndUser_Id(id, userId) != 0;
+        return voiceRepository.deleteVoiceByIdAndUser_id(id, userId) != 0;
     }
 
     public Voice get(int id, int userId) {

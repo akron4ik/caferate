@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import workplace.model.Restaurant;
 import workplace.repository.restaurant.DataJpaRestaurantRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import static workplace.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class RestaurantService {
@@ -21,21 +24,23 @@ public class RestaurantService {
 
     @CacheEvict(value = "meals", allEntries = true)
     public Restaurant create(Restaurant restaurant){
+        Assert.notNull(restaurant, "restaurant must be not null");
         return restaurantRepository.save(restaurant);
     }
 
     public Restaurant get(int id){
-        return restaurantRepository.get(id);
+        return checkNotFoundWithId(restaurantRepository.get(id), id);
     }
 
     @CacheEvict(value = "meals", allEntries = true)
     public void delete(int id){
-        restaurantRepository.delete(id);
+        checkNotFoundWithId(restaurantRepository.delete(id), id);
     }
 
     @CacheEvict(value = "meals", allEntries = true)
     public void update(Restaurant restaurant){
-        restaurantRepository.save(restaurant);
+        Assert.notNull(restaurant,"restaurant must be not null");
+        checkNotFoundWithId(restaurantRepository.save(restaurant), restaurant.getId());
     }
 
     @Cacheable("meals")
@@ -44,7 +49,7 @@ public class RestaurantService {
     }
 
     public Restaurant getWithMeal(int id){
-        return restaurantRepository.getWithMeal(id);
+        return checkNotFoundWithId(restaurantRepository.getWithMeal(id), id);
     }
 
     public List<Restaurant> getRestaurantsWithMeals(){

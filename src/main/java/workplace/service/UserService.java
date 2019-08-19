@@ -43,7 +43,7 @@ public class UserService {
     @CacheEvict(value = "users", allEntries = true)
     public void update(User user){
         Assert.notNull(user, "user must not be null");
-        userRepository.save(user);
+        checkNotFoundWithId(userRepository.save(user), user.getId());
     }
 
     @CacheEvict(value = "users", allEntries = true)

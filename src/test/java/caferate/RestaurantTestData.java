@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestaurantTestData {
     public static final int RESTAURANT_1_ID = 100006;
+    public static final int RESTAURANT_3_ID = 100008;
     public static final Restaurant RESTAURANT_1 = new Restaurant(100006, "Капри");
     public static final Restaurant RESTAURANT_2 = new Restaurant(100007, "Ле Дюк");
     public static final Restaurant RESTAURANT_3 = new Restaurant(100008, "Шиннок");
@@ -24,7 +25,7 @@ public class RestaurantTestData {
     }
 
     public static <T> void assertMatch (Iterable<T> actual, Iterable<T> expected) {
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("meals").isEqualTo(expected);
     }
 
 }

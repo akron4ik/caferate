@@ -1,19 +1,10 @@
 package workplace.util;
 
-import workplace.model.Meal;
-import workplace.model.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import workplace.repository.meal.DataJpaMealRepository;
 import workplace.repository.restaurant.DataJpaRestaurantRepository;
 import workplace.repository.user.DataJpaUserRepository;
 import workplace.repository.voice.DataJpaVoiceRepository;
-import workplace.to.RestaurantMenu;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MakeRestaurantMenu {
     @Autowired

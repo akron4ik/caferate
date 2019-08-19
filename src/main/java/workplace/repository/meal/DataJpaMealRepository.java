@@ -29,13 +29,15 @@ public class DataJpaMealRepository {
         return crudMealRepository.getMealByIdWithRestaurant(id);
     }
 
-    public List<Meal> getAll(int id){
+    public List<Meal> getAllByRestaurantId(int id){
         return crudMealRepository.getMealsByRestaurantId(id);
     }
 
-    public List<Meal> getMealByDateAndRestaurantId(int restaurantId, LocalDate localDate){
-        return crudMealRepository.getMealsByDateAndRestaurantId(restaurantId, localDate);
+    public List<Meal> getMealByDateAndRestaurantId(LocalDate localDate, int restaurantId){
+        return crudMealRepository.getMealsByDateAndRestaurantId( localDate, restaurantId);
     }
+
+    public List<Meal> getAll(){ return crudMealRepository.getAll();}
 
 
 }

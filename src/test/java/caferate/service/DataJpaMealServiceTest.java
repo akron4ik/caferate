@@ -1,5 +1,7 @@
 package caferate.service;
 
+import caferate.MealTestData;
+import caferate.RestaurantTestData;
 import org.junit.jupiter.api.BeforeEach;
 import workplace.model.Meal;
 import org.junit.jupiter.api.Test;
@@ -10,8 +12,7 @@ import workplace.util.exception.NotFoundException;
 import java.time.LocalDate;
 
 import static caferate.MealTestData.*;
-import static caferate.RestaurantTestData.RESTAURANT_1;
-import static caferate.RestaurantTestData.RESTAURANT_1_ID;
+import static caferate.RestaurantTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DataJpaMealServiceTest extends AbstractServiceTest {
@@ -27,23 +28,23 @@ public class DataJpaMealServiceTest extends AbstractServiceTest {
 
     @Test
     void delete() throws Exception {
-        mealService.delete(MEAL_1_ID);
-        assertMatch(mealService.getAll(RESTAURANT_1_ID), MEAL_2, MEAL_3);
+        mealService.delete(MEAL_7_ID);
+        MealTestData.assertMatch(mealService.getAllByRestaurantId(RESTAURANT_3_ID), MEAL_8, MEAL_9);
     }
 
     @Test
     void create() throws Exception {
-        Meal newMeal = new Meal(null, "newMeal", LocalDate.of(2019,8,13), 222, RESTAURANT_1);
+        Meal newMeal = new Meal(null, "newMeal", LocalDate.of(2019,8,13), 222, RESTAURANT_3);
         Meal created = mealService.create(newMeal);
         newMeal.setId(created.getId());
-        assertMatch(newMeal, created);
-        assertMatch(mealService.getAll(RESTAURANT_1_ID),  MEAL_1, MEAL_2, MEAL_3, newMeal);
+        MealTestData.assertMatch(newMeal, created);
+        assertMatch(mealService.getAllByRestaurantId(RESTAURANT_3_ID),  MEAL_7, MEAL_8, MEAL_9, newMeal);
     }
 
     @Test
     void get() throws Exception {
-        Meal actual = mealService.get(100011);
-        assertMatch(actual, MEAL_1);
+        Meal actual = mealService.get(MEAL_1_ID);
+        MealTestData.assertMatch(actual, MEAL_1);
     }
 
    @Test
@@ -58,20 +59,31 @@ public class DataJpaMealServiceTest extends AbstractServiceTest {
         updated.setName("Updated");
         updated.setPrice(111);
         mealService.update(new Meal(updated));
-        assertMatch(mealService.get(100011), updated);
+        MealTestData.assertMatch(mealService.get(MEAL_1_ID), updated);
     }
 
 
-    /*@Test
+    @Test
+    void getAllByRestaurantId() throws Exception {
+        assertMatch(mealService.getAllByRestaurantId(RESTAURANT_3_ID), MEAL_7, MEAL_8, MEAL_9);
+    }
+
+    @Test
+    void getMealsByDateAndRestaurantId() throws Exception {
+        assertMatch(mealService.getMealsByDate(LocalDate.of(2015,6,1), RESTAURANT_1_ID), MEAL_1, MEAL_2, MEAL_3 );
+
+    }
+
+    @Test
+    void getWithRestaurant() throws Exception {
+        Meal meal = mealService.getMealWithRestaurant(MEAL_1_ID);
+        MealTestData.assertMatch(meal, MEAL_1);
+        RestaurantTestData.assertMatch(meal.getRestaurant(), RESTAURANT_1);
+    }
+
+    @Test
     void getAll() throws Exception {
-        assertMatch(service.getAll(USER_ID), MEALS);
+        MealTestData.assertMatch(mealService.getAll(), MEALS);
     }
-*/
-    /*@Test
-    void getBetween() throws Exception {
-        assertMatch(service.getBetweenDates(
-                LocalDate.of(2015, Month.MAY, 30),
-                LocalDate.of(2015, Month.MAY, 30), USER_ID), MEAL3, MEAL2, MEAL1);
-    }*/
 
 }
