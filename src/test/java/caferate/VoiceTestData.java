@@ -1,10 +1,8 @@
 package caferate;
 
-import workplace.model.Restaurant;
-import workplace.model.Voice;
 
+import workplace.model.Voice;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -24,7 +22,7 @@ public class VoiceTestData {
 
 
     public static <T> void assertMatch(T actual, T expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "restaurant");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "restaurant", "user");
     }
 
     public static void assertMatch(Iterable<Voice> actual, Voice... expected) {
@@ -32,6 +30,6 @@ public class VoiceTestData {
     }
 
     public static <T> void assertMatch (Iterable<T> actual, Iterable<T> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("restaurant").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("restaurant", "user").isEqualTo(expected);
     }
 }

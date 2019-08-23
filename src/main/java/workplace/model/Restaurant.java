@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import workplace.HasId;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE )
 @Table(name = "restaurants", uniqueConstraints = @UniqueConstraint(columnNames = "name", name = "restaurants_unique_name_idx"))
-public class Restaurant extends AbstractBaseEntity {
+public class Restaurant extends AbstractBaseEntity implements HasId {
 
     @Column(name = "name", nullable = false)
     @Size(min = 2, max = 200)
@@ -21,7 +22,6 @@ public class Restaurant extends AbstractBaseEntity {
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
-    /*@OrderBy()*/
     private List<Meal> meals;
 
     public Restaurant() {

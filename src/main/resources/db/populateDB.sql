@@ -5,13 +5,13 @@ DELETE FROM meals;
 DELETE FROM voices;
 ALTER SEQUENCE GLOBAL_SEQ RESTART WITH 100000;
 
-INSERT INTO users (name, email, password, registered) VALUES
-  ('Admin', 'admin@admin.ru', 'admin', '2019-08-08 10:00:00.000000'),
-  ('Tom', 'tom@tom.ru', 'tom', '2019-08-09 10:00:00.000000'),
-  ('Homer', 'homer@homer.ru', 'homer', '2019-08-02 10:00:00.000000'),
-  ('Bart', 'bart@bart.ru', 'bart', '2019-08-01 10:00:00.000000'),
-  ('Liza', 'liza@liza.ru', 'liza', '2019-08-04 10:00:00.000000'),
-  ('Meggi', 'meggi@meggi.ru', 'meggi', '2019-08-08 10:00:00.000000');
+INSERT INTO users (name, email, password) VALUES
+  ('Admin', 'admin@admin.ru', '{noop}admin' ),
+  ('Tom', 'tom@tom.ru', '{noop}tom'),
+  ('Homer', 'homer@homer.ru', '{noop}homer'),
+  ('Bart', 'bart@bart.ru', '{noop}bart'),
+  ('Liza', 'liza@liza.ru', '{noop}liza'),
+  ('Meggi', 'meggi@meggi.ru', '{noop}meggi');
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ADMIN', 100000),

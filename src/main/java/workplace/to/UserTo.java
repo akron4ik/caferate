@@ -1,6 +1,8 @@
 package workplace.to;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
@@ -21,6 +23,7 @@ public class UserTo extends BaseTo implements Serializable {
 
     @NotBlank
     @Size(min = 5, max = 32, message = "length must be between 5 and 32 characters")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     public UserTo() {

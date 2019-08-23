@@ -31,11 +31,6 @@ public class ValidationUtil {
         }
     }
 
-    public static void checkTime(LocalDateTime localDateTime){
-        /*if(localDateTime.isAfter())*/
-    }
-
-
     public static void checkNew(HasId bean) {
         if (!bean.isNew()) {
             throw new IllegalArgumentException(bean + " must be new (id=null)");
@@ -43,7 +38,6 @@ public class ValidationUtil {
     }
 
     public static void assureIdConsistent(HasId bean, int id) {
-//      conservative when you reply, but accept liberally (http://stackoverflow.com/a/32728226/548473)
         if (bean.isNew()) {
             bean.setId(id);
         } else if (bean.id() != id) {
@@ -51,7 +45,6 @@ public class ValidationUtil {
         }
     }
 
-    //  http://stackoverflow.com/a/28565320/548473
     public static Throwable getRootCause(Throwable t) {
         Throwable result = t;
         Throwable cause;
@@ -61,4 +54,5 @@ public class ValidationUtil {
         }
         return result;
     }
+
 }

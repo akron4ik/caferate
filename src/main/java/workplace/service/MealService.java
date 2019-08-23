@@ -6,7 +6,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import workplace.model.Meal;
-import workplace.repository.meal.CrudMealRepository;
 import workplace.repository.meal.DataJpaMealRepository;
 
 import java.time.LocalDate;
@@ -45,8 +44,8 @@ public class MealService {
     }
 
     @Cacheable("meals")
-    public List<Meal> getAllByRestaurantId(int restaurantid){
-        return mealRepository.getAllByRestaurantId(restaurantid);
+    public List<Meal> getAllByRestaurantId(int restaurantId){
+        return mealRepository.getAllByRestaurantId(restaurantId);
     }
 
     public List<Meal> getAll(){return mealRepository.getAll();}

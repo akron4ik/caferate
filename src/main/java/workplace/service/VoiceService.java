@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import workplace.model.Voice;
 import workplace.repository.voice.DataJpaVoiceRepository;
+import workplace.util.Util;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,23 +27,32 @@ public class VoiceService {
     @CacheEvict(value = "voices", allEntries = true)
     public Voice create(Voice voice, int userId){
         Assert.notNull(voice, " voice must be not null ");
-        return voiceRepository.save(voice, userId);
+        if (Util.checkVoteTime()) {
+            return voiceRepository.save(voice, userId);
+        }
+        else{
+            return null;
+        }
     }
 
     @CacheEvict(value = "voices", allEntries = true)
     public void delete(int id, int userId){
-        checkNotFoundWithId(voiceRepository.delete(id, userId),id);
+        if(Util.checkVoteTime()) {
+            checkNotFoundWithId(voiceRepository.delete(id, userId), id);
+        }
     }
 
     public Voice get(int id, int userId){
+
         return checkNotFoundWithId(voiceRepository.get(id, userId), id);
     }
 
     @CacheEvict(value = "voices", allEntries = true)
     public void update(Voice voice, int userId){
-
         Assert.notNull(voice, " voice must be not null ");
-        checkNotFoundWithId(voiceRepository.save(voice, userId), voice.getId());
+        if(Util.checkVoteTime()) {
+            checkNotFoundWithId(voiceRepository.save(voice, userId), voice.getId());
+        }
     }
 
     @Cacheable("voices")
@@ -50,7 +60,7 @@ public class VoiceService {
         return voiceRepository.getAll(userId);
     }
 
-    public int getRaiting(int restaurantId, LocalDate date){
+    public int getRating(int restaurantId, LocalDate date){
         return voiceRepository.getRateByRestaurant(restaurantId, date);
     }
 }

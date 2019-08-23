@@ -1,46 +1,48 @@
 package workplace.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
+import workplace.HasId;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email", name = "users_unique_email_idx"))
-public class User extends AbstractBaseEntity implements Serializable {
+public class User extends AbstractBaseEntity implements HasId {
 
     @Column(name = "name", nullable = false)
     @Size(min = 2, max = 200)
     @NotBlank
     private String name;
 
-    @Column(name = "email", unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     @Email
     @NotBlank
-    @Size(min = 4, max = 200)
+    @Size(min = 4, max = 100)
     private String email;
 
     @Column(name = "password", nullable = false)
     @NotBlank
     @Size(min = 1, max = 200)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
-    @Column(name = "registered", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
-    @NotNull
-    private LocalDateTime registered;
 
     @Column(name = "enabled", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean enabled;
+
+    @Column(name = "registered", nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
+    @NotNull
+    private Date registered = new Date();
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
@@ -58,11 +60,11 @@ public class User extends AbstractBaseEntity implements Serializable {
 
     }
 
-    /*public User(Integer id, String name, String email, String password, Role... roles) {
-        this(id, name, email, password, new Date(), true, Collections.singleton(roles));
-    }*/
+    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
+        this(id, name, email, password, new Date(), true, EnumSet.of(role, roles));
+    }
 
-    public User(Integer id, String name, String email, String password, LocalDateTime registered, boolean enabled, Collection<Role> roles) {
+    public User(Integer id, String name, String email, String password, Date registered, boolean enabled, Collection<Role> roles) {
         super(id);
         this.name = name;
         this.email = email;
@@ -89,11 +91,11 @@ public class User extends AbstractBaseEntity implements Serializable {
         this.password = password;
     }
 
-    public LocalDateTime getRegistered() {
+    public Date getRegistered() {
         return registered;
     }
 
-    public void setRegistered(LocalDateTime registered) {
+    public void setRegistered(Date registered) {
         this.registered = registered;
     }
 

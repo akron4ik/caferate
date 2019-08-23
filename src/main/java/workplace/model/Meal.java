@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.lang.Nullable;
 
 import org.hibernate.annotations.Cache;
+import workplace.HasId;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -18,7 +20,7 @@ import java.util.Objects;
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Table(name = "meals", uniqueConstraints = @UniqueConstraint(columnNames = {"restaurant_id", "name"}, name = "meals_unique_name_idx"))
-public class Meal extends AbstractBaseEntity {
+public class Meal extends AbstractBaseEntity implements HasId {
 
     @Size(min = 2, max = 200)
     @Column(name = "name", nullable = false)

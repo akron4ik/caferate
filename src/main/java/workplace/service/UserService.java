@@ -3,32 +3,44 @@ package workplace.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import workplace.AuthorizedUser;
 import workplace.model.User;
 import workplace.repository.user.DataJpaUserRepository;
-import workplace.util.ValidationUtil;
+import workplace.to.UserTo;
+import workplace.util.UserUtil;
 
 import java.util.List;
 
+import static workplace.util.UserUtil.prepareToSave;
 import static workplace.util.ValidationUtil.checkNotFound;
 import static workplace.util.ValidationUtil.checkNotFoundWithId;
 
 @Service("userService")
-public class UserService {
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class UserService implements UserDetailsService {
+
 
     private final DataJpaUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(DataJpaUserRepository userRepository) {
+    public UserService(DataJpaUserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @CacheEvict(value = "users", allEntries = true)
     public User create(User user){
         Assert.notNull(user, "user must not be null");
-        return userRepository.save(user);
+        return userRepository.save(prepareToSave(user, passwordEncoder));
     }
 
     public User get(int id){
@@ -47,6 +59,13 @@ public class UserService {
     }
 
     @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void update(UserTo userTo) {
+        User user = get(userTo.id());
+        userRepository.save(prepareToSave(UserUtil.updateFromTo(user, userTo), passwordEncoder));
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
     public void delete(int id){
         checkNotFoundWithId(userRepository.delete(id), id);
     }
@@ -61,6 +80,15 @@ public class UserService {
     public void enable(int id, boolean enabled) {
         User user = get(id);
         user.setEnabled(enabled);
-        userRepository.save(user);  // !! need only for JDBC implementation
+        userRepository.save(user);
+    }
+
+    @Override
+    public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.getByEmail(email.toLowerCase());
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " is not found");
+        }
+        return new AuthorizedUser(user);
     }
 }

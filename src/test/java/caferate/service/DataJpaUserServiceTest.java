@@ -12,6 +12,7 @@ import workplace.util.exception.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Date;
 
 import static caferate.UserTestData.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,30 +30,30 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
 
     @Test
     void create() throws Exception{
-        User newUser = new User(null, "Created", "created@created.ru", "created", LocalDateTime.of(2019,8,14,20,20), true, Collections.singleton(Role.USER));
+        User newUser = new User(null, "Created", "created@created.ru", "created", new Date(), true, Collections.singleton(Role.USER));
         User created = userService.create(newUser);
         newUser.setId(created.getId());
         assertMatch(newUser, created);
-        assertMatch(userService.getAll(), newUser, USER_2, USER_1, USER_6, USER_5, USER_3, USER_4);
+        assertMatch(userService.getAll(), newUser, USER_1, USER_2, USER_3, USER_4, USER_5, USER_6);
 
     }
 
     @Test
     void duplicateMailCreate() throws Exception {
         assertThrows(DataAccessException.class, () ->
-                userService.create(new User(null, "Duplicate", "admin@admin.ru", "newPass", LocalDateTime.of(2019,8,14,20,20), true, Collections.singleton(Role.USER))));
+                userService.create(new User(null, "Duplicate", "admin@admin.ru", "newPass", new Date(), true, Collections.singleton(Role.USER))));
     }
 
     @Test
     void get() throws Exception{
-        User user = userService.get(100000);
-        UserTestData.assertMatch(user, USER_1);
+        User user = userService.get(USER_ID);
+        UserTestData.assertMatch(user, USER_2);
     }
 
     @Test
     void delete() throws Exception{
-        userService.delete(100000);
-        assertMatch(userService.getAll(), USER_2, USER_6, USER_5, USER_3, USER_4);
+        userService.delete(USER_ID);
+        assertMatch(userService.getAll(), USER_1, USER_3, USER_4, USER_5, USER_6);
     }
 
     @Test
@@ -79,7 +80,7 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
         updated.setName("UpdatedName");
         updated.setEmail("update@update.ru");
         userService.update(new User(updated));
-        assertMatch(userService.get(100001), updated);
+        assertMatch(userService.get(USER_ID), updated);
     }
 
     @Test

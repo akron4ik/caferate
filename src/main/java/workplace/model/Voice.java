@@ -2,6 +2,7 @@ package workplace.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import workplace.HasId;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,7 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "voices", uniqueConstraints = @UniqueConstraint(columnNames = {"date_time", "user_id"}, name = "voices_unique_datetime_idx"))
-public class Voice extends AbstractBaseEntity {
+public class Voice extends AbstractBaseEntity implements HasId {
 
     @Column(name = "date_time", nullable = false, columnDefinition = "DATE DEFAULT now()")
     @NotNull
