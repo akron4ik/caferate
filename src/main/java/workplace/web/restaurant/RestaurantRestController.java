@@ -37,17 +37,17 @@ public class RestaurantRestController {
         return service.getAll();
     }
 
-    @GetMapping("/all")
+   /* @GetMapping("/all")
     public List<Restaurant> getAllWithMeals(){
         log.info("get all restaurants with meals");
         return service.getRestaurantsWithMeals();
-    }
+    }*/
 
-    @GetMapping("/all")
+    /*@GetMapping("/all")
     public List<Restaurant> getAllByDate(@RequestParam LocalDate localDate){
         log.info("get all restaurants by date {}", localDate);
         return service.getRestaurantsByDate(localDate == null ? LocalDate.now() : localDate);
-    }
+    }*/
 
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id){
@@ -55,12 +55,12 @@ public class RestaurantRestController {
         return service.get(id);
     }
 
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public Restaurant getWithMeal(@PathVariable int id){
         log.info("get restaurant with meals by id {}", id);
         return service.getWithMeal(id);
 
-    }
+    }*/
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id){

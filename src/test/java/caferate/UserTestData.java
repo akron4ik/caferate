@@ -4,6 +4,7 @@ import org.springframework.test.web.servlet.ResultMatcher;
 import workplace.model.Restaurant;
 import workplace.model.Role;
 import workplace.model.User;
+import workplace.to.UserTo;
 import workplace.web.json.JsonUtil;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,10 @@ import static caferate.TestUtil.readListFromJsonMvcResult;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTestData {
+
+    public static final int USER_1_ID = 100000;
     public static final int USER_ID = 100001;
+
 
 
     public static final User USER_1 = new User(100000, "Admin", "admin@admin.ru", "admin", Role.ADMIN);
@@ -44,6 +48,10 @@ public class UserTestData {
 
     public static ResultMatcher contentJson(User expected) {
         return result -> assertMatch(readFromJsonMvcResult(result, User.class), expected);
+    }
+
+    public static String jsonWithPassword(UserTo user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
     }
 
     public static String jsonWithPassword(User user, String passw) {

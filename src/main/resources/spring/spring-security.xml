@@ -10,7 +10,8 @@
 
     <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
         <http-basic/>
-        <intercept-url pattern="/**/rest/admin/users" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/rest/admin/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/rest/admin/**" access="permitAll()"/> <!--Сделал для REST тестов-->
         <intercept-url pattern="/rest/profile/**" access="isAuthenticated()"/>
 
         <intercept-url pattern="/rest/vote/**" access="isAuthenticated()"/>

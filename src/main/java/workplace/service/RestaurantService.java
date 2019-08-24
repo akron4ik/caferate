@@ -55,7 +55,6 @@ public class RestaurantService {
     public List<Restaurant> getRestaurantsWithMeals(){
         return restaurantRepository.getAllRestaurantsWithMeals();
     }
-
     public List<Restaurant> getRestaurantsByDate(LocalDate date){
         return restaurantRepository.getAllRestaurantsByDate(date);
     }

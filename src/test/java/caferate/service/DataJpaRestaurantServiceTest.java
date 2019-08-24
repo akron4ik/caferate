@@ -68,11 +68,11 @@ public class DataJpaRestaurantServiceTest extends AbstractServiceTest {
         MealTestData.assertMatch(restaurant.getMeals(), MEAL_7, MEAL_8, MEAL_9);
     }
 
-    @Test
+    /*@Test
     void getAllRestaurantsByMealDate() throws Exception{
         List<Restaurant> restaurants = restaurantService.getRestaurantsByDate(LocalDate.of(2015,6,3));
         RestaurantTestData.assertMatch(restaurants, RESTAURANT_3, RESTAURANT_4);
 
-    }
+    }*/
 
 }
