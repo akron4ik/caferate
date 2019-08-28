@@ -18,7 +18,7 @@ public class Voice extends AbstractBaseEntity implements HasId {
     private LocalDate localDate;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id",foreignKey = @ForeignKey(name = "GLOBAL_SEQ", foreignKeyDefinition = "START WITH 100000"))
+    @JoinColumn(name = "restaurant_id", foreignKey = @ForeignKey(name = "GLOBAL_SEQ", foreignKeyDefinition = "START WITH 100000"))
     private Restaurant restaurant;
 
     @OneToOne(fetch = FetchType.EAGER)

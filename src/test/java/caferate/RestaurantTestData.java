@@ -1,10 +1,15 @@
 package caferate;
 
+import org.springframework.test.web.servlet.ResultMatcher;
 import workplace.model.Restaurant;
+import workplace.to.RestaurantTo;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static caferate.MealTestData.*;
+import static caferate.TestUtil.readFromJsonMvcResult;
+import static caferate.TestUtil.readListFromJsonMvcResult;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestaurantTestData {
@@ -15,6 +20,8 @@ public class RestaurantTestData {
     public static final Restaurant RESTAURANT_3 = new Restaurant(100008, "Шиннок");
     public static final Restaurant RESTAURANT_4 = new Restaurant(100009, "Шоколадница");
     public static final Restaurant RESTAURANT_5 = new Restaurant(100010, "МакДак");
+    public static final List<Restaurant> RESTAURANTS = List.of(RESTAURANT_1,RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5);
+    public static final RestaurantTo RESTAURANT_3_TO = new RestaurantTo(100008, "Шиннок", List.of(MEAL_7, MEAL_8, MEAL_9), 2);
 
     public static <T> void assertMatch(T actual, T expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "meals");
@@ -26,6 +33,14 @@ public class RestaurantTestData {
 
     public static <T> void assertMatch (Iterable<T> actual, Iterable<T> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("meals").isEqualTo(expected);
+    }
+
+    public static ResultMatcher contentJson(Restaurant... expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, Restaurant.class), List.of(expected));
+    }
+
+    public static ResultMatcher contentJson(RestaurantTo expected) {
+        return result -> assertMatch(readFromJsonMvcResult(result, RestaurantTo.class), expected);
     }
 
 }

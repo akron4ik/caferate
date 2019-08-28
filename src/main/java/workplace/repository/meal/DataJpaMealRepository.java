@@ -1,5 +1,7 @@
 package workplace.repository.meal;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 import workplace.model.Meal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,7 @@ import java.util.List;
 
 @Repository
 public class DataJpaMealRepository {
+    private static final Sort SORT_BY_DATE = Sort.by(Sort.Order.desc("date"));
 
     @Autowired
     CrudMealRepository crudMealRepository;
@@ -30,7 +33,7 @@ public class DataJpaMealRepository {
     }
 
     public List<Meal> getAllByRestaurantId(int id){
-        return crudMealRepository.getMealsByRestaurantId(id);
+        return crudMealRepository.getMealsByRestaurantId(id, SORT_BY_DATE);
     }
 
     public List<Meal> getMealByDateAndRestaurantId(LocalDate localDate, int restaurantId){

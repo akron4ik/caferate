@@ -1,5 +1,6 @@
 package workplace.repository.restaurant;
 
+import org.springframework.transaction.annotation.Propagation;
 import workplace.model.Restaurant;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
     @Override

@@ -1,5 +1,6 @@
 package workplace.repository.voice;
 
+import org.springframework.transaction.annotation.Propagation;
 import workplace.model.Voice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 public interface CrudVoiceRepository extends JpaRepository<Voice, Integer> {
 
     Voice getVoiceByIdAndUser_Id(int id, int userId);

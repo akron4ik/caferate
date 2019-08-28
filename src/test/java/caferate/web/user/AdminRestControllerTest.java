@@ -3,19 +3,11 @@ package caferate.web.user;
 import caferate.UserTestData;
 import caferate.web.AbstractControllerTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 import workplace.model.Role;
 import workplace.model.User;
-import workplace.repository.JpaUtil;
-import workplace.service.UserService;
-import workplace.web.json.JsonUtil;
 import workplace.web.user.AdminRestController;
 
 import java.util.Collections;
@@ -53,7 +45,7 @@ public class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID)
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + USER_2_ID)
                 .with(userHttpBasic(USER_1)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
@@ -65,13 +57,13 @@ public class AdminRestControllerTest extends AbstractControllerTest {
         User updated = new User(USER_2);
         updated.setName("UpdatedName");
         updated.setRoles(Collections.singletonList(Role.ADMIN));
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER_2_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(USER_1))
                 .content(jsonWithPassword(updated, USER_2.getPassword())))
                 .andExpect(status().isNoContent());
 
-        assertMatch(userService.get(USER_ID), updated);
+        assertMatch(userService.get(USER_2_ID), updated);
     }
 
     @Test
@@ -102,12 +94,12 @@ public class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void enable() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.patch(REST_URL + USER_ID).param("enabled", "false")
+        mockMvc.perform(MockMvcRequestBuilders.patch(REST_URL + USER_2_ID).param("enabled", "false")
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(USER_1)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        assertFalse(userService.get(USER_ID).isEnabled());
+        assertFalse(userService.get(USER_2_ID).isEnabled());
     }
 }

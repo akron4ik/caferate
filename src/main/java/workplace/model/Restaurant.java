@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import workplace.HasId;
@@ -22,6 +24,7 @@ public class Restaurant extends AbstractBaseEntity implements HasId {
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
+    @JsonIgnore
     private List<Meal> meals;
 
     public Restaurant() {

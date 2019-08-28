@@ -39,6 +39,7 @@ public class MealService {
         checkNotFoundWithId(mealRepository.save(meal), meal.getId());
     }
 
+    @Cacheable("meals")
     public Meal get(int id){
         return checkNotFoundWithId(mealRepository.get(id), id);
     }
@@ -48,6 +49,7 @@ public class MealService {
         return mealRepository.getAllByRestaurantId(restaurantId);
     }
 
+    @Cacheable("meals")
     public List<Meal> getAll(){return mealRepository.getAll();}
 
     public Meal getMealWithRestaurant(int id){

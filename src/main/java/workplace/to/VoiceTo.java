@@ -7,15 +7,12 @@ private int id;
 private int userId;
 private int restaurantId;
 private LocalDateTime time;
-private boolean vote;
 
-    public VoiceTo(int id, int userId, int restaurantId, LocalDateTime time, boolean vote) {
+    public VoiceTo(int id, int userId, int restaurantId, LocalDateTime time) {
         this.id = id;
         this.userId = userId;
         this.restaurantId = restaurantId;
         this.time = time;
-        this.vote = vote;
-
     }
 
     public int getId() {
@@ -50,11 +47,4 @@ private boolean vote;
         this.time = time;
     }
 
-    public boolean isVote() {
-        return vote;
-    }
-
-    public void setVote(boolean vote) {
-        this.vote = vote;
-    }
 }

@@ -13,8 +13,10 @@
         <intercept-url pattern="/rest/admin/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/rest/admin/**" access="permitAll()"/> <!--Сделал для REST тестов-->
         <intercept-url pattern="/rest/profile/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/rest/profile/register" access="isAnonymous()"/>
 
-        <intercept-url pattern="/rest/vote/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/rest/voices/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/rest/voices/**" access="permitAll()"/><!--Сделал для REST тестов-->
 
         <intercept-url pattern="/rest/restaurants/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/rest/restaurants/**" access="permitAll()"/>

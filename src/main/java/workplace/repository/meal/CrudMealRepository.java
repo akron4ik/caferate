@@ -1,5 +1,7 @@
 package workplace.repository.meal;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Propagation;
 import workplace.model.Meal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,7 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
 
     @Override
@@ -31,7 +33,7 @@ public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
     @Query("SELECT m FROM Meal m JOIN FETCH m.restaurant WHERE m.id=:id")
     Meal getMealByIdWithRestaurant(@Param("id")int id);
 
-    List<Meal> getMealsByRestaurantId(int restaurantId);
+    List<Meal> getMealsByRestaurantId(int restaurantId, Sort sort);
 
     List<Meal> getMealsByDateAndRestaurantId(@NotNull LocalDate date, Integer restaurant_id);
 

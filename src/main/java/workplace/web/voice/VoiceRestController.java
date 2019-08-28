@@ -74,9 +74,4 @@ public class VoiceRestController {
         return service.getAll(userId);
     }
 
-    @GetMapping("/{restaurantId}")
-    public int getRating(@PathVariable int restaurantId, @RequestParam(required = false) LocalDate localDate){
-        log.info("get restaurant rating by restaurant id {} and date{}", restaurantId, localDate);
-        return service.getRating(restaurantId, localDate == null ? LocalDate.now() : localDate);
-    }
 }

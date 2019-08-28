@@ -46,13 +46,13 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
 
     @Test
     void get() throws Exception{
-        User user = userService.get(USER_ID);
+        User user = userService.get(USER_2_ID);
         UserTestData.assertMatch(user, USER_2);
     }
 
     @Test
     void delete() throws Exception{
-        userService.delete(USER_ID);
+        userService.delete(USER_2_ID);
         assertMatch(userService.getAll(), USER_1, USER_3, USER_4, USER_5, USER_6);
     }
 
@@ -80,7 +80,7 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
         updated.setName("UpdatedName");
         updated.setEmail("update@update.ru");
         userService.update(new User(updated));
-        assertMatch(userService.get(USER_ID), updated);
+        assertMatch(userService.get(USER_2_ID), updated);
     }
 
     @Test

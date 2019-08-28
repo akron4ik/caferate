@@ -76,51 +76,51 @@ public class DataJpaVoiceServiceTest extends AbstractServiceTest {
 
     @Test
     void delete() throws Exception{
-        repository.delete(VOICE_1_ID, USER_ID);
-        VoiceTestData.assertMatch(voiceService.getAll(USER_ID), VOICE_4, VOICE_5);
+        repository.delete(VOICE_1_ID, USER_2_ID);
+        VoiceTestData.assertMatch(voiceService.getAll(USER_2_ID), VOICE_4, VOICE_5);
     }
 
     @Test
     void deleteWithTimeRules() throws Exception{
        if(Util.checkVoteTime()) {
-           voiceService.delete(VOICE_1_ID, USER_ID);
-           VoiceTestData.assertMatch(voiceService.getAll(USER_ID), VOICE_4, VOICE_5);
+           voiceService.delete(VOICE_1_ID, USER_2_ID);
+           VoiceTestData.assertMatch(voiceService.getAll(USER_2_ID), VOICE_4, VOICE_5);
        }else {
-           VoiceTestData.assertMatch(voiceService.getAll(USER_ID), VOICE_1, VOICE_4, VOICE_5);
+           VoiceTestData.assertMatch(voiceService.getAll(USER_2_ID), VOICE_1, VOICE_4, VOICE_5);
        }
     }
 
     @Test
     void getAll() throws Exception{
-        VoiceTestData.assertMatch(voiceService.getAll(USER_ID), VOICE_1, VOICE_4, VOICE_5);
+        VoiceTestData.assertMatch(voiceService.getAll(USER_2_ID), VOICE_1, VOICE_4, VOICE_5);
     }
 
     @Test
     void get() throws Exception{
-        VoiceTestData.assertMatch(voiceService.get(VOICE_1_ID, USER_ID), VOICE_1);
+        VoiceTestData.assertMatch(voiceService.get(VOICE_1_ID, USER_2_ID), VOICE_1);
     }
 
     @Test
     void deleteNotFound() throws Exception{
         if(Util.checkVoteTime()) {
-            assertThrows(NotFoundException.class, () -> voiceService.delete(1, USER_ID));
+            assertThrows(NotFoundException.class, () -> voiceService.delete(1, USER_2_ID));
         }
     }
 
     @Test
     void deleteNotOwn() throws Exception{
         if(Util.checkVoteTime()) {
-            assertThrows(NotFoundException.class, () -> repository.delete(VOICE_2_ID, USER_ID));
+            assertThrows(NotFoundException.class, () -> repository.delete(VOICE_2_ID, USER_2_ID));
         }
     }
 
     @Test
     void getNotFound() throws Exception{
-        assertThrows(NotFoundException.class, ()-> voiceService.get(1, USER_ID));
+        assertThrows(NotFoundException.class, ()-> voiceService.get(1,USER_2_ID));
     }
 
     @Test
     void getNotOwn() throws Exception{
-        assertThrows(NotFoundException.class, ()-> voiceService.get(VOICE_2_ID, USER_ID));
+        assertThrows(NotFoundException.class, ()-> voiceService.get(VOICE_2_ID, USER_2_ID));
     }
 }

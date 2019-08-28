@@ -38,7 +38,7 @@ public class DataJpaMealServiceTest extends AbstractServiceTest {
         Meal created = mealService.create(newMeal);
         newMeal.setId(created.getId());
         MealTestData.assertMatch(newMeal, created);
-        assertMatch(mealService.getAllByRestaurantId(RESTAURANT_3_ID),  MEAL_7, MEAL_8, MEAL_9, newMeal);
+        assertMatch(mealService.getAllByRestaurantId(RESTAURANT_3_ID), newMeal, MEAL_8,  MEAL_7, MEAL_9);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class DataJpaMealServiceTest extends AbstractServiceTest {
 
     @Test
     void getAllByRestaurantId() throws Exception {
-        assertMatch(mealService.getAllByRestaurantId(RESTAURANT_3_ID), MEAL_7, MEAL_8, MEAL_9);
+        assertMatch(mealService.getAllByRestaurantId(RESTAURANT_3_ID), MEAL_8, MEAL_7, MEAL_9);
     }
 
     @Test

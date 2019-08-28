@@ -1,47 +1,67 @@
 package workplace.to;
 
-import java.time.LocalDate;
-import java.util.Map;
 
-public class RestaurantTo {
-    String restaurantName;
-    Map<String, Double> menu;
-    LocalDate localDate;
+import org.hibernate.validator.constraints.SafeHtml;
+import workplace.model.Meal;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.List;
+
+public class RestaurantTo extends BaseTo implements Serializable {
+
+    @NotBlank
+    @Size(min = 2, max = 100)
+    @SafeHtml
+    String name;
+
+    List<Meal> meals;
+
+    Integer rating;
 
     public RestaurantTo() {
     }
 
-    public RestaurantTo(String restaurantName, Map<String, Double> menu, LocalDate localDate) {
-        this.restaurantName = restaurantName;
-        this.menu = menu;
-        this.localDate = localDate;
+    public RestaurantTo(Integer id, String name, List<Meal> meals, Integer rating) {
+        super(id);
+        this.name = name;
+        this.meals = meals;
+        this.rating = rating;
+
+
+
     }
 
-    public String getRestaurantName() {
-        return restaurantName;
+    public String getName() {
+        return name;
     }
 
-    public void setRestaurant(String restaurantName) {
-        this.restaurantName = restaurantName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Map<String, Double> getMenu() {
-        return menu;
+    public List<Meal> getMeals() {
+        return meals;
     }
 
-    public void setMenu(Map<String, Double> menu) {
-        this.menu = menu;
+    public void setMeals(List<Meal> meals) {
+        this.meals = meals;
     }
 
-    public LocalDate getLocalDate() {
-        return localDate;
+    public Integer getRating() {
+        return rating;
     }
 
-    public void setLocalDate(LocalDate localDate) {
-        this.localDate = localDate;
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "RestaurantTo{" +
+                "name='" + name + '\'' +
+                ", meals=" + meals +
+                '}';
+    }
 }

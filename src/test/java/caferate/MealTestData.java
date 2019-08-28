@@ -1,12 +1,14 @@
 package caferate;
 
+import org.springframework.test.web.servlet.ResultMatcher;
 import workplace.model.Meal;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static caferate.RestaurantTestData.*;
+import static caferate.TestUtil.readFromJsonMvcResult;
+import static caferate.TestUtil.readListFromJsonMvcResult;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MealTestData {
@@ -46,11 +48,11 @@ public class MealTestData {
 
     }
 
-    /*public static ResultMatcher contentJson(Iterable<MealTo> expected) {
-        return result -> assertMatch(readListFromJsonMvcResult(result, MealTo.class), expected);
+    public static ResultMatcher contentJson(Meal... expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, Meal.class), expected);
     }
 
     public static ResultMatcher contentJson(Meal expected) {
         return result -> assertMatch(readFromJsonMvcResult(result, Meal.class), expected);
-    }*/
+    }
 }

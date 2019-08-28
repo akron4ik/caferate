@@ -1,18 +1,23 @@
 package caferate;
 
 
+import org.springframework.test.web.servlet.ResultMatcher;
+import workplace.model.Meal;
 import workplace.model.Voice;
 import java.time.LocalDate;
 import java.util.List;
 
 
 import static caferate.RestaurantTestData.*;
+import static caferate.TestUtil.readFromJsonMvcResult;
+import static caferate.TestUtil.readListFromJsonMvcResult;
 import static caferate.UserTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class VoiceTestData {
     public static final int VOICE_1_ID = 100023;
     public static final int VOICE_2_ID = 100024;
+    public static final int VOICE_3_ID = 100025;
 
     public static final Voice VOICE_1 = new Voice(100023, LocalDate.of(2015, 6, 1), RESTAURANT_1, USER_2);
     public static final Voice VOICE_2 = new Voice(100024, LocalDate.of(2015, 7, 2), RESTAURANT_1, USER_3);
@@ -31,5 +36,13 @@ public class VoiceTestData {
 
     public static <T> void assertMatch (Iterable<T> actual, Iterable<T> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("restaurant", "user").isEqualTo(expected);
+    }
+
+    public static ResultMatcher contentJson(Voice... expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, Voice.class), expected);
+    }
+
+    public static ResultMatcher contentJson(Voice expected) {
+        return result -> assertMatch(readFromJsonMvcResult(result, Voice.class), expected);
     }
 }

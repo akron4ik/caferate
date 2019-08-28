@@ -18,9 +18,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserTestData {
 
     public static final int USER_1_ID = 100000;
-    public static final int USER_ID = 100001;
-
-
+    public static final int USER_2_ID = 100001;
+    public static final int USER_3_ID = 100002;
+    public static final int USER_4_ID = 100003;
 
     public static final User USER_1 = new User(100000, "Admin", "admin@admin.ru", "admin", Role.ADMIN);
     public static final User USER_2 = new User(100001, "Tom", "tom@tom.ru", "tom", Role.USER);

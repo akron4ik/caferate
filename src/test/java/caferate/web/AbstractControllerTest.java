@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -12,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import workplace.repository.JpaUtil;
+import workplace.service.MealService;
+import workplace.service.RestaurantService;
 import workplace.service.UserService;
 
 import javax.annotation.PostConstruct;
@@ -24,8 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "classpath:spring/spring-mvc.xml",
         "classpath:spring/spring-db.xml"
 })
-//@WebAppConfiguration
-//@ExtendWith(SpringExtension.class)
+
 @Transactional
 abstract public class AbstractControllerTest {
 
@@ -39,13 +42,16 @@ abstract public class AbstractControllerTest {
     protected MockMvc mockMvc;
 
     @Autowired
-    private CacheManager cacheManager;
+    protected CacheManager cacheManager;
 
     @Autowired(required = false)
-    private JpaUtil jpaUtil;
+    protected JpaUtil jpaUtil;
 
     @Autowired
     protected UserService userService;
+
+    @Autowired
+    protected RestaurantService restaurantService;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -63,20 +69,12 @@ abstract public class AbstractControllerTest {
     @BeforeEach
     void setUp() {
         cacheManager.getCache("users").clear();
-        if (jpaUtil != null) {
-            jpaUtil.clear2ndLevelHibernateCache();
-        }
+        cacheManager.getCache("meals").clear();
+        jpaUtil.clear2ndLevelHibernateCache();
     }
 
-   /* private String getMessage(String code) {
-        return messageUtil.getMessage(code, MessageUtil.RU_LOCALE);
-    }
+    @BeforeEach
+    void populate(){
 
-    public ResultMatcher errorType(ErrorType type) {
-        return jsonPath("$.type").value(type.name());
     }
-
-    public ResultMatcher detailMessage(String code) {
-        return jsonPath("$.details").value(getMessage(code));
-    }*/
 }
