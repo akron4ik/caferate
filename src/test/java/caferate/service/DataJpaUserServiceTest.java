@@ -30,18 +30,18 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
 
     @Test
     void create() throws Exception{
-        User newUser = new User(null, "Created", "created@created.ru", "created", new Date(), true, Collections.singleton(Role.USER));
+        User newUser = new User(null, "Created", "created@created.ru", "created", new Date(), true, Collections.singleton(Role.ROlE_USER));
         User created = userService.create(newUser);
         newUser.setId(created.getId());
         assertMatch(newUser, created);
-        assertMatch(userService.getAll(), newUser, USER_1, USER_2, USER_3, USER_4, USER_5, USER_6);
+        assertMatch(userService.getAll(), newUser, ADMIN, USER_2, USER_3, USER_4, USER_5, USER_6);
 
     }
 
     @Test
     void duplicateMailCreate() throws Exception {
         assertThrows(DataAccessException.class, () ->
-                userService.create(new User(null, "Duplicate", "admin@admin.ru", "newPass", new Date(), true, Collections.singleton(Role.USER))));
+                userService.create(new User(null, "Duplicate", "admin@admin.ru", "newPass", new Date(), true, Collections.singleton(Role.ROlE_USER))));
     }
 
     @Test
@@ -53,7 +53,7 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
     @Test
     void delete() throws Exception{
         userService.delete(USER_2_ID);
-        assertMatch(userService.getAll(), USER_1, USER_3, USER_4, USER_5, USER_6);
+        assertMatch(userService.getAll(), ADMIN, USER_3, USER_4, USER_5, USER_6);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
     @Test
     void getByEmail() throws Exception {
         User user = userService.getByEmail("admin@admin.ru");
-        assertMatch(user, USER_1);
+        assertMatch(user, ADMIN);
     }
 
     @Test

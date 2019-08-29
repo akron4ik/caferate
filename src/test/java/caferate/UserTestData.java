@@ -17,17 +17,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserTestData {
 
-    public static final int USER_1_ID = 100000;
+    public static final int ADMIN_ID = 100000;
     public static final int USER_2_ID = 100001;
     public static final int USER_3_ID = 100002;
     public static final int USER_4_ID = 100003;
 
-    public static final User USER_1 = new User(100000, "Admin", "admin@admin.ru", "admin", Role.ADMIN);
-    public static final User USER_2 = new User(100001, "Tom", "tom@tom.ru", "tom", Role.USER);
-    public static final User USER_3 = new User(100002, "Homer", "homer@homer.ru", "homer", Role.USER);
-    public static final User USER_4 = new User(100003, "Bart", "bart@bart.ru", "bart", Role.USER);
-    public static final User USER_5 = new User(100004, "Liza", "liza@liza.ru", "liza", Role.USER);
-    public static final User USER_6 = new User(100005, "Meggi", "meggi@meggi.ru", "meggi", Role.USER);
+    public static final User ADMIN = new User(100000, "Admin", "admin@admin.ru", "admin", Role.ROlE_ADMIN);
+    public static final User USER_2 = new User(100001, "Tom", "tom@tom.ru", "tom", Role.ROlE_USER);
+    public static final User USER_3 = new User(100002, "Homer", "homer@homer.ru", "homer", Role.ROlE_USER);
+    public static final User USER_4 = new User(100003, "Bart", "bart@bart.ru", "bart", Role.ROlE_USER);
+    public static final User USER_5 = new User(100004, "Liza", "liza@liza.ru", "liza", Role.ROlE_USER);
+    public static final User USER_6 = new User(100005, "Meggi", "meggi@meggi.ru", "meggi", Role.ROlE_USER);
 
 
     public static <T> void assertMatch(T actual, T expected) {

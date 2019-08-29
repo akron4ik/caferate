@@ -2,8 +2,9 @@ package caferate;
 
 
 import org.springframework.test.web.servlet.ResultMatcher;
-import workplace.model.Meal;
 import workplace.model.Voice;
+import workplace.to.VoiceTo;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class VoiceTestData {
     public static final int VOICE_3_ID = 100025;
 
     public static final Voice VOICE_1 = new Voice(100023, LocalDate.of(2015, 6, 1), RESTAURANT_1, USER_2);
-    public static final Voice VOICE_2 = new Voice(100024, LocalDate.of(2015, 7, 2), RESTAURANT_1, USER_3);
+    public static final Voice VOICE_2 = new Voice(100024, LocalDate.of(2015, 9, 4), RESTAURANT_3, USER_3);
     public static final Voice VOICE_3 = new Voice(100025, LocalDate.of(2015, 8, 3), RESTAURANT_2, USER_4);
     public static final Voice VOICE_4 = new Voice(100026, LocalDate.of(2015, 9, 4), RESTAURANT_3, USER_2);
     public static final Voice VOICE_5 = new Voice(100027, LocalDate.of(2015, 10, 5), RESTAURANT_3, USER_2);
@@ -28,6 +29,10 @@ public class VoiceTestData {
 
     public static <T> void assertMatch(T actual, T expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "restaurant", "user");
+    }
+
+    public static  void assertMatch(VoiceTo actual, VoiceTo expected) {
+        assertThat(actual).isEqualTo(expected);
     }
 
     public static void assertMatch(Iterable<Voice> actual, Voice... expected) {

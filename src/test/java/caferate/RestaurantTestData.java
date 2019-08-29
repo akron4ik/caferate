@@ -14,14 +14,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestaurantTestData {
     public static final int RESTAURANT_1_ID = 100006;
+    public static final int RESTAURANT_2_ID = 100007;
     public static final int RESTAURANT_3_ID = 100008;
     public static final Restaurant RESTAURANT_1 = new Restaurant(100006, "Капри");
     public static final Restaurant RESTAURANT_2 = new Restaurant(100007, "Ле Дюк");
     public static final Restaurant RESTAURANT_3 = new Restaurant(100008, "Шиннок");
     public static final Restaurant RESTAURANT_4 = new Restaurant(100009, "Шоколадница");
     public static final Restaurant RESTAURANT_5 = new Restaurant(100010, "МакДак");
-    public static final List<Restaurant> RESTAURANTS = List.of(RESTAURANT_1,RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5);
-    public static final RestaurantTo RESTAURANT_3_TO = new RestaurantTo(100008, "Шиннок", List.of(MEAL_7, MEAL_8, MEAL_9), 2);
+
 
     public static <T> void assertMatch(T actual, T expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "meals");

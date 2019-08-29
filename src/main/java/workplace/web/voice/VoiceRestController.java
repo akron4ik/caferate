@@ -6,12 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import workplace.View;
 import workplace.model.Voice;
 import workplace.service.VoiceService;
+import workplace.to.VoiceTo;
 import workplace.web.SecurityUtil;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -33,11 +37,11 @@ public class VoiceRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Voice> createWithLocation(@RequestBody Voice voice) {
+    public ResponseEntity<Voice> createWithLocation(@Validated(View.Web.class) @RequestBody VoiceTo voiceTo) {
         int userId = SecurityUtil.authUserId();
-        checkNew(voice);
-        log.info("create {} for user {}", voice, userId);
-        Voice created = service.create(voice, userId);
+        checkNew(voiceTo);
+        log.info("create {} for user {}", voiceTo, userId);
+        Voice created = service.create(voiceTo, userId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_VOICE_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
@@ -46,11 +50,11 @@ public class VoiceRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Voice voice, @PathVariable int id) {
-        assureIdConsistent(voice, id);
+    public void update(@Validated(View.Web.class) @RequestBody VoiceTo voiceTo, @PathVariable int id){
         int userId = SecurityUtil.authUserId();
         log.info("update voice by id {}", id);
-        service.update(voice, userId);
+        assureIdConsistent(voiceTo, id);
+        service.update(voiceTo, userId);
     }
 
     @DeleteMapping("/{id}")

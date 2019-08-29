@@ -14,7 +14,7 @@ public class UserUtil {
 
 
     public static User createNewFromTo(UserTo userTo) {
-        return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), new Date(), true,  Collections.singleton(Role.USER));
+        return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), new Date(), true,  Collections.singleton(Role.ROlE_USER));
     }
 
     public static UserTo asTo(User user) {

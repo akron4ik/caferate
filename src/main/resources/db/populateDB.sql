@@ -14,12 +14,12 @@ INSERT INTO users (name, email, password) VALUES
   ('Meggi', 'meggi@meggi.ru', '{noop}meggi');
 
 INSERT INTO user_roles (role, user_id) VALUES
-  ('ADMIN', 100000),
-  ('USER', 100001),
-  ('USER', 100002),
-  ('USER', 100003),
-  ('USER', 100004),
-  ('USER', 100005);
+  ('ROlE_ADMIN', 100000),
+  ('ROlE_USER', 100001),
+  ('ROlE_USER', 100002),
+  ('ROlE_USER', 100003),
+  ('ROlE_USER', 100004),
+  ('ROlE_USER', 100005);
 
 
 INSERT INTO restaurants (name) VALUES
@@ -45,7 +45,7 @@ INSERT INTO meals (name, date_time, price, restaurant_id) VALUES
 
 INSERT INTO voices (date_time, restaurant_id, user_id) VALUES
   ('2015-06-01', 100006, 100001),
-  ('2015-07-02', 100006, 100002),
+  ('2015-09-04', 100008, 100002),
   ('2015-08-03', 100007, 100003),
   ('2015-09-04', 100008, 100001),
   ('2015-10-05', 100008,100001);

@@ -10,7 +10,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import workplace.model.Voice;
 import workplace.service.VoiceService;
+import workplace.to.VoiceTo;
 import workplace.util.Util;
+import workplace.util.VoiceUtil;
 import workplace.web.json.JsonUtil;
 import workplace.web.voice.VoiceRestController;
 import java.time.LocalDate;
@@ -41,9 +43,9 @@ public class VoiceRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {//проголосовать можно только до 11:00
-        Voice expected = new Voice(null, LocalDate.now(), RESTAURANT_2, USER_4);
-        if(Util.checkVoteTime()) {
+        VoiceTo expected = new VoiceTo(null, LocalDate.now(), RESTAURANT_2_ID, USER_4_ID);
 
+        if(Util.checkVoteTime()) {
             ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_VOICE)
                     .with(userAuth(USER_4))
                     .contentType(MediaType.APPLICATION_JSON)
@@ -53,10 +55,11 @@ public class VoiceRestControllerTest extends AbstractControllerTest {
 
             Voice returned = readFromJson(action, Voice.class);
             expected.setId(returned.getId());
+            VoiceTo actual = new VoiceTo(returned.getId(), returned.getLocalDate(), returned.getRestaurant().getId(), returned.getUser().getId());
 
-            VoiceTestData.assertMatch(returned, expected);//после 11:00 тест работать не будет
-        }
-        else{
+            VoiceTestData.assertMatch(actual, expected);//после 11:00 тест работать не будет
+         }
+       else{
             System.out.println("You can't voice after 11:00");
         }
     }
@@ -78,22 +81,22 @@ public class VoiceRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        Voice updated = VOICE_3;
-        updated.setRestaurant(RESTAURANT_3);
+        VoiceTo updated = VoiceUtil.asTo(VOICE_3);
+        updated.setRestaurantId(RESTAURANT_3_ID);
         if(Util.checkVoteTime()) {
         mockMvc.perform(MockMvcRequestBuilders.put(REST_VOICE + VOICE_3_ID)
                 .with(userAuth(USER_4))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
+                .content(JsonUtil.writeValue(updated))).andDo(print())
                 .andExpect(status().isNoContent());
 
-        VoiceTestData.assertMatch(voiceService.get(VOICE_3_ID, USER_4_ID), updated);
+        VoiceTo actual = VoiceUtil.asTo(voiceService.get(VOICE_3_ID, USER_4_ID));
+        VoiceTestData.assertMatch(actual, updated);
+
     }
         else{
         System.out.println("You can't update voice after 11:00");
     }
-
-
 }
 
     @Test

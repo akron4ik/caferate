@@ -42,7 +42,7 @@ public class ProfileRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL)
                 .with(userHttpBasic(USER_2)))
                 .andExpect(status().isNoContent());
-        assertMatch(userService.getAll(), USER_1, USER_3, USER_4, USER_5, USER_6);
+        assertMatch(userService.getAll(), ADMIN, USER_3, USER_4, USER_5, USER_6);
     }
 
     @Test
@@ -50,7 +50,6 @@ public class ProfileRestControllerTest extends AbstractControllerTest {
         UserTo createdTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
 
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "register")
-                .with(userAuth(USER_2))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonWithPassword(createdTo, createdTo.getPassword())))
                 .andDo(print())
@@ -76,30 +75,4 @@ public class ProfileRestControllerTest extends AbstractControllerTest {
 
         assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER_2), updatedTo));
     }
-
-
-   /* @Test
-    void updateInvalid() throws Exception {
-        UserTo updatedTo = new UserTo(null, null, "password", null);
-
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-                *//*.with(userHttpBasic(USER_2))*//*
-                .with(userAuth(USER_2))
-                .content(JsonUtil.writeValue(updatedTo)))
-                .andDo(print())
-                .andExpect(status().isUnprocessableEntity())
-                .andDo(print());
-    }*/
-
-    /*@Test
-    @Transactional(propagation = Propagation.NEVER)
-    void updateDuplicate() throws Exception {
-        UserTo updatedTo = new UserTo(null, "newName", "admin@gmail.com", "newPassword");
-
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-                .with(userHttpBasic(USER_2))
-                .content(JsonUtil.writeValue(updatedTo)))
-                .andExpect(status().isUnprocessableEntity())
-                .andDo(print());
-    }*/
 }
