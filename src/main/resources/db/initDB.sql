@@ -43,7 +43,7 @@ CREATE TABLE meals
   name            VARCHAR(225)        NOT NULL,
   date_time       DATE DEFAULT now()  NOT NULL,
   price           DOUBLE              NOT NULL,
-  restaurant_id   INTEGER             NOT NULL,
+  restaurant_id   INTEGER                     ,
   FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX meals_unique_name_idx ON meals (restaurant_id, name, date_time);

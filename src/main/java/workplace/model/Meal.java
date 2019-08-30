@@ -2,6 +2,7 @@ package workplace.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -41,7 +42,7 @@ public class Meal extends AbstractBaseEntity implements HasId {
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @Nullable
-   /* @JsonBackReference*/
+    @JsonBackReference
     private Restaurant restaurant;
 
     public Meal() {

@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cache;
@@ -24,7 +25,7 @@ public class Restaurant extends AbstractBaseEntity implements HasId {
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
-    @JsonIgnore
+    @JsonManagedReference
     private List<Meal> meals;
 
     public Restaurant() {

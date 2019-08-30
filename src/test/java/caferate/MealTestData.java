@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MealTestData {
 
     public static final int MEAL_1_ID = 100011;
+    public static final int MEAL_2_ID = 100012;
     public static final int MEAL_7_ID = 100017;
 
     public static final Meal MEAL_1 = new Meal(100011, "Цезарь", LocalDate.of(2015,06, 01), 350.5, RESTAURANT_1);

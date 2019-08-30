@@ -57,9 +57,6 @@ public class RestaurantService {
         return checkNotFoundWithId(restaurantRepository.getWithMeal(id), id);
     }
 
-    public List<Restaurant> getRestaurantsWithMeals(){
-        return restaurantRepository.getAllRestaurantsWithMeals();
-    }
 
     public List<Restaurant> getRestaurantsByDate(LocalDate date){
         return restaurantRepository.getAllRestaurantsByDate(date);

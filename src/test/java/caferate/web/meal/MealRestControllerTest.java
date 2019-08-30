@@ -32,12 +32,12 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL + MEAL_7_ID)
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL + MEAL_2_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> MealTestData.assertMatch(readFromJsonMvcResult(result, Meal.class), MEAL_7));
+                .andExpect(result -> MealTestData.assertMatch(readFromJsonMvcResult(result, Meal.class), MEAL_2));
     }
 
     @Test
@@ -57,17 +57,17 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        Meal updated = MEAL_1;
+        Meal updated = new Meal(MEAL_7);
         updated.setName("Update");
         updated.setPrice(666);
 
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_MEAL_URL + MEAL_1_ID)
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_MEAL_URL + MEAL_7_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated))).andDo(print())
                 .andExpect(status().isNoContent());
 
-        MealTestData.assertMatch(mealService.get(MEAL_1_ID), updated);
+        MealTestData.assertMatch(mealService.get(MEAL_7_ID), updated);
     }
 
     @Test

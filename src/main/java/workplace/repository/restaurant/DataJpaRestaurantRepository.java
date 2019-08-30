@@ -38,7 +38,4 @@ public class DataJpaRestaurantRepository {
         return crudRepository.getRestaurantsByDate(localDate);
     }
 
-    public List<Restaurant> getAllRestaurantsWithMeals(){
-        return crudRepository.getRestaurantsWithMeals();
-    }
 }

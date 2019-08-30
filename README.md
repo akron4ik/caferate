@@ -43,8 +43,9 @@ Update Restaurant | curl -s -X PUT -d '{"id":100006, "name":"Updated Restaurant"
 Delete Restaurant | curl -s -X DELETE http://localhost:8080/caferate/rest/restaurants/100007 --user admin@admin.ru:admin
 Get Restaurant | curl -s http://localhost:8080/caferate/rest/restaurants/100006 --user admin@admin.ru:admin
 Get All Restaurants | curl -s http://localhost:8080/caferate/rest/restaurants/all --user admin@admin.ru:admin
-Get All by Date | curl -s http://localhost:8080/caferate/rest/restaurants/all/date?localDate=2015-06-01 --user admin@admin.ru:admin
+Get All Restaurants with meals by Date (MENU)| curl -s http://localhost:8080/caferate/rest/restaurants/all/date?localDate=2015-06-01 --user admin@admin.ru:admin
 Get Rating by Restaurant and day | curl -s http://localhost:8080/caferate/rest/restaurants/rate/100008?localDate=2015-09-04 --user admin@admin.ru:admin
+
 
 # Curl Rest Users requests examples
 Description | Command

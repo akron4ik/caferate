@@ -47,14 +47,6 @@ public class RestaurantRestController {
         return restaurantService.getAll();
     }
 
-
-
-    @GetMapping("/all/meals")
-    public List<Restaurant> getAllWithMeals(){
-        log.info("get all restaurants with meals");
-        return restaurantService.getRestaurantsWithMeals();
-    }
-
     @GetMapping("/all/date")
     public List<Restaurant> getAllByDate(@RequestParam LocalDate localDate){
         log.info("get all restaurants by date {}", localDate);
