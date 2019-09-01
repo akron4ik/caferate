@@ -1,6 +1,6 @@
 package caferate.service;
 
-import caferate.UserTestData;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +9,9 @@ import workplace.model.Role;
 import workplace.model.User;
 import workplace.service.UserService;
 import workplace.util.exception.NotFoundException;
-
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import static caferate.UserTestData.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,7 +33,7 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
         User created = userService.create(newUser);
         newUser.setId(created.getId());
         assertMatch(newUser, created);
-        assertMatch(userService.getAll(), newUser, ADMIN, USER_2, USER_3, USER_4, USER_5, USER_6);
+        assertMatch(userService.getAll(), ADMIN, USER_2, USER_3, USER_4, USER_5, USER_6, USER_7, USER_8, USER_9, USER_10, USER_11, USER_12, USER_13, USER_14, USER_15, USER_16, USER_17, USER_18, USER_19, USER_20, newUser);
 
     }
 
@@ -47,13 +46,13 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
     @Test
     void get() throws Exception{
         User user = userService.get(USER_2_ID);
-        UserTestData.assertMatch(user, USER_2);
+        assertMatch(user, USER_2);
     }
 
     @Test
     void delete() throws Exception{
         userService.delete(USER_2_ID);
-        assertMatch(userService.getAll(), ADMIN, USER_3, USER_4, USER_5, USER_6);
+        assertMatch(userService.getAll(), ADMIN, USER_3, USER_4, USER_5, USER_6, USER_7, USER_8, USER_9, USER_10, USER_11, USER_12, USER_13, USER_14, USER_15, USER_16, USER_17, USER_18, USER_19, USER_20);
     }
 
     @Test
@@ -89,5 +88,11 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
         assertFalse(userService.get(USER_2.getId()).isEnabled());
         userService.enable(USER_2.getId(), true);
         assertTrue(userService.get(USER_2.getId()).isEnabled());
+    }
+
+    @Test
+    void getAll(){
+        List<User> actual = userService.getAll();
+        assertMatch(actual, USERS);
     }
 }

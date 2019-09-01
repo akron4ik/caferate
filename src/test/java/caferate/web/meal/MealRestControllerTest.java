@@ -2,7 +2,6 @@ package caferate.web.meal;
 
 import caferate.MealTestData;
 import caferate.web.AbstractControllerTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -77,7 +76,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        MealTestData.assertMatch(mealService.getAll(), MEAL_2, MEAL_3, MEAL_4, MEAL_5, MEAL_6, MEAL_7, MEAL_8, MEAL_9, MEAL_10, MEAL_11, MEAL_12);
+        MealTestData.assertMatch(mealService.getAll(),  MEAL_2, MEAL_3, MEAL_4, MEAL_5, MEAL_6, MEAL_7, MEAL_8, MEAL_9, MEAL_10, MEAL_11, MEAL_12, MEAL_13, MEAL_14, MEAL_15);
 
     }
 
@@ -88,18 +87,18 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(MEAL_8, MEAL_7, MEAL_9));
+                .andExpect(contentJson(MEAL_7, MEAL_8, MEAL_9));
     }
 
     @Test
     void getAllByRestaurantAndDate() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL + "all/" + RESTAURANT_1_ID)
-                .param("localDate","2015-06-02")
+                .param("localDate","2019-08-10")
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(MEAL_4, MEAL_5, MEAL_6));
+                .andExpect(contentJson(MEAL_1, MEAL_2, MEAL_3));
     }
 
 }

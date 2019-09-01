@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public class DataJpaUserRepository {
-    private static final Sort SORT_BY_DATE = new Sort(Sort.Direction.DESC, "registered");
     private static final Sort SORT_BY_ID = new Sort(Sort.Direction.ASC, "id");
 
     @Autowired
@@ -28,7 +27,7 @@ public class DataJpaUserRepository {
     }
 
     public List<User> getAll() {
-        return userRepository.findAll(SORT_BY_DATE);
+        return userRepository.findAll(SORT_BY_ID);
     }
 
     public User getByEmail(String email){

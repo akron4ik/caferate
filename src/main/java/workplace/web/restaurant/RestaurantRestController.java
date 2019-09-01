@@ -14,17 +14,12 @@ import workplace.View;
 import workplace.model.Restaurant;
 import workplace.service.RestaurantService;
 import workplace.service.VoiceService;
-import workplace.to.RestaurantTo;
-import workplace.util.RestaurantUtil;
-import workplace.util.Util;
 
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static workplace.util.ValidationUtil.assureIdConsistent;
-import static workplace.util.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = RestaurantRestController.REST_REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -91,10 +86,16 @@ public class RestaurantRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @GetMapping("/rate/{restaurantId}")
+    @GetMapping("/rating/bydate/{restaurantId}")
     public int getRating(@PathVariable int restaurantId, @RequestParam(required = false) LocalDate localDate){
         log.info("get restaurant rating by restaurant id {} and date{}", restaurantId, localDate);
         return voiceService.getRating(restaurantId, localDate == null ? LocalDate.now() : localDate);
+    }
+
+    @GetMapping("/rating/{restaurantId}")
+    public int getRatingBetweenDates(@PathVariable int restaurantId, @RequestParam(required = false) LocalDate startDate,@RequestParam(required = false) LocalDate endDate){
+        log.info("get restaurant rating by restaurant id {} and between dates {} and {}", restaurantId, startDate, endDate);
+        return voiceService.getBetweenDates(restaurantId, startDate, endDate);
     }
 
 }

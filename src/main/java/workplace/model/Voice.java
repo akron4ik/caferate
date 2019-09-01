@@ -2,6 +2,7 @@ package workplace.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 import workplace.HasId;
 
 import javax.persistence.*;
@@ -13,8 +14,9 @@ import java.util.Objects;
 @Table(name = "voices", uniqueConstraints = @UniqueConstraint(columnNames = {"date_time", "user_id"}, name = "voices_unique_datetime_idx"))
 public class Voice extends AbstractBaseEntity implements HasId {
 
-    @Column(name = "date_time", nullable = false, columnDefinition = "DATE DEFAULT now()")
+    @Column(name = "date_time", nullable = false)
     @NotNull
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate localDate;
 
     @OneToOne(fetch = FetchType.EAGER)

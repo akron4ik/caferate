@@ -13,8 +13,7 @@ public class DataJpaRestaurantRepository {
    @Autowired
    private CrudRestaurantRepository crudRepository;
 
-
-    public Restaurant save(Restaurant restaurant) {
+   public Restaurant save(Restaurant restaurant) {
         return crudRepository.save(restaurant);
     }
 

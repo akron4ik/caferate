@@ -7,15 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import workplace.model.Restaurant;
 import workplace.service.RestaurantService;
-
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-
 import static caferate.MealTestData.*;
 import static caferate.RestaurantTestData.*;
-import static org.assertj.core.api.Assertions.assertThat;
+
 
 
 public class DataJpaRestaurantServiceTest extends AbstractServiceTest {
@@ -31,7 +27,7 @@ public class DataJpaRestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     void getAll() throws Exception{
-       RestaurantTestData.assertMatch(restaurantService.getAll(), RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5);
+       RestaurantTestData.assertMatch(restaurantService.getAll(), RESTAURANTS);
     }
 
     @Test
@@ -44,7 +40,7 @@ public class DataJpaRestaurantServiceTest extends AbstractServiceTest {
     void create() throws Exception {
         Restaurant newRestaurant = new Restaurant(null, "newRestaurant");
         restaurantService.create(newRestaurant);
-        RestaurantTestData.assertMatch(restaurantService.getAll(), RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5, newRestaurant);
+        RestaurantTestData.assertMatch(restaurantService.getAll(), RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5, RESTAURANT_6, RESTAURANT_7, RESTAURANT_8, RESTAURANT_9, RESTAURANT_10, newRestaurant);
     }
 
     @Test
@@ -58,7 +54,7 @@ public class DataJpaRestaurantServiceTest extends AbstractServiceTest {
     @Test
     void delete() throws Exception{
         restaurantService.delete(RESTAURANT_1_ID);
-        RestaurantTestData.assertMatch(restaurantService.getAll(), RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5 );
+        RestaurantTestData.assertMatch(restaurantService.getAll(), RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5, RESTAURANT_6, RESTAURANT_7, RESTAURANT_8, RESTAURANT_9, RESTAURANT_10 );
     }
 
     @Test
@@ -70,8 +66,8 @@ public class DataJpaRestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     void getAllRestaurantsByDate() throws Exception{
-        List<Restaurant> restaurants = restaurantService.getRestaurantsByDate(LocalDate.of(2015,6,3));
-        RestaurantTestData.assertMatch(restaurants, RESTAURANT_3, RESTAURANT_4);
+        List<Restaurant> restaurants = restaurantService.getRestaurantsByDate(LocalDate.of(2019,8,10));
+        RestaurantTestData.assertMatch(restaurants, RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5);
 
     }
 

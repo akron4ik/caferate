@@ -14,10 +14,7 @@ import workplace.model.Voice;
 import workplace.service.VoiceService;
 import workplace.to.VoiceTo;
 import workplace.web.SecurityUtil;
-
-import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 import static workplace.util.ValidationUtil.assureIdConsistent;

@@ -15,14 +15,14 @@ public interface CrudVoiceRepository extends JpaRepository<Voice, Integer> {
 
     Voice getVoiceByIdAndUser_Id(int id, int userId);
 
-
     @Transactional
     int deleteVoiceByIdAndUser_id(int id, int userId);
-
-
 
     List<Voice> getAllByUser_Id(int userId);
 
     @Query("SELECT COUNT(v) FROM Voice v WHERE v.restaurant.id=:id AND v.localDate=:date_time")
     int getCountRestaurantVoicesByDate(@Param("id") int restaurantId, @Param("date_time") LocalDate date);
+
+    @Query("SELECT COUNT(v) FROM Voice v WHERE v.restaurant.id=:id AND v.localDate BETWEEN :startDate AND :endDate")
+    int getRatingBetweenDates(@Param("id") int restaurantId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

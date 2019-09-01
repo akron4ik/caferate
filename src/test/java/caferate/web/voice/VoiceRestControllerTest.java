@@ -71,10 +71,11 @@ public class VoiceRestControllerTest extends AbstractControllerTest {
                 .with(userAuth(USER_2)))
                 .andDo(print())
                 .andExpect(status().isOk());
-        VoiceTestData.assertMatch(voiceService.getAll(USER_2_ID), VOICE_4, VOICE_5 );
+        VoiceTestData.assertMatch(voiceService.get(VOICE_3_ID + 17, USER_2_ID), VOICE_20);
         }
         else{
             System.out.println("You can't delete voice after 11:00");
+            VoiceTestData.assertMatch(voiceService.getAll(USER_2_ID), VOICE_1, VOICE_20);
         }
 
     }
@@ -106,7 +107,7 @@ public class VoiceRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(VOICE_1, VOICE_4, VOICE_5));
+                .andExpect(contentJson(VOICE_1, VOICE_20));
 
     }
 }

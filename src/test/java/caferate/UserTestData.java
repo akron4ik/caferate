@@ -1,14 +1,10 @@
 package caferate;
 
 import org.springframework.test.web.servlet.ResultMatcher;
-import workplace.model.Restaurant;
 import workplace.model.Role;
 import workplace.model.User;
 import workplace.to.UserTo;
 import workplace.web.json.JsonUtil;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 import static caferate.TestUtil.readFromJsonMvcResult;
@@ -22,12 +18,29 @@ public class UserTestData {
     public static final int USER_3_ID = 100002;
     public static final int USER_4_ID = 100003;
 
-    public static final User ADMIN = new User(100000, "Admin", "admin@admin.ru", "admin", Role.ROlE_ADMIN);
-    public static final User USER_2 = new User(100001, "Tom", "tom@tom.ru", "tom", Role.ROlE_USER);
-    public static final User USER_3 = new User(100002, "Homer", "homer@homer.ru", "homer", Role.ROlE_USER);
-    public static final User USER_4 = new User(100003, "Bart", "bart@bart.ru", "bart", Role.ROlE_USER);
-    public static final User USER_5 = new User(100004, "Liza", "liza@liza.ru", "liza", Role.ROlE_USER);
-    public static final User USER_6 = new User(100005, "Meggi", "meggi@meggi.ru", "meggi", Role.ROlE_USER);
+    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@admin.ru", "admin", Role.ROlE_ADMIN);
+    public static final User USER_2 = new User(USER_2_ID, "Tom", "tom@tom.ru", "tom", Role.ROlE_USER);
+    public static final User USER_3 = new User(USER_3_ID, "Homer", "homer@homer.ru", "homer", Role.ROlE_USER);
+    public static final User USER_4 = new User(USER_4_ID, "Bart", "bart@bart.ru", "bart", Role.ROlE_USER);
+    public static final User USER_5 = new User(USER_4_ID + 1, "Liza", "liza@liza.ru", "liza", Role.ROlE_USER);
+    public static final User USER_6 = new User(USER_4_ID + 2, "Meggi", "meggi@meggi.ru", "meggi", Role.ROlE_USER);
+    public static final User USER_7 = new User(USER_4_ID + 3, "Marge", "marge@marge.ru", "marge", Role.ROlE_USER);
+    public static final User USER_8 = new User(USER_4_ID + 4, "Felix", "felix@felix.ru", "felix", Role.ROlE_USER);
+    public static final User USER_9 = new User(USER_4_ID + 5, "Peter", "peter@peter.ru", "peter", Role.ROlE_USER);
+    public static final User USER_10 = new User(USER_4_ID + 6, "Gregori", "gregori@gregori.ru", "gregori", Role.ROlE_USER);
+    public static final User USER_11 = new User(USER_4_ID + 7, "Harry", "harry@harry.ru", "harry", Role.ROlE_USER);
+    public static final User USER_12 = new User(USER_4_ID + 8, "Germiona", "germiona@germiona.ru", "germiona", Role.ROlE_USER);
+    public static final User USER_13 = new User(USER_4_ID + 9, "Ron", "ron@ron.ru", "ron", Role.ROlE_USER);
+    public static final User USER_14 = new User(USER_4_ID + 10, "Malfoi", "malfoi@malfoi.ru", "malfoi", Role.ROlE_USER);
+    public static final User USER_15 = new User(USER_4_ID + 11, "Dambldor", "dambldor@dambldor.ru", "dambldor", Role.ROlE_USER);
+    public static final User USER_16 = new User(USER_4_ID + 12, "Volandemort", "volandemort@volandemort.ru", "volandemort", Role.ROlE_USER);
+    public static final User USER_17 = new User(USER_4_ID + 13, "Nevil", "nevil@nevil.ru", "nevil", Role.ROlE_USER);
+    public static final User USER_18 = new User(USER_4_ID + 14, "Jameson", "jameson@jameson.ru", "jameson", Role.ROlE_USER);
+    public static final User USER_19 = new User(USER_4_ID + 15, "Patric", "patric@patric.ru", "patric", Role.ROlE_USER);
+    public static final User USER_20 = new User(USER_4_ID + 16, "Batman", "batman@batman.ru", "batman", Role.ROlE_USER);
+
+    public static final List<User> USERS = List.of(ADMIN, USER_2, USER_3, USER_4, USER_5, USER_6, USER_7, USER_8, USER_9, USER_10, USER_11, USER_12, USER_13, USER_14, USER_15, USER_16, USER_17, USER_18, USER_19, USER_20);
+
 
 
     public static <T> void assertMatch(T actual, T expected) {

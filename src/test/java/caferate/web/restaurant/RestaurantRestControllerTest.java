@@ -9,11 +9,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import workplace.model.Restaurant;
 import workplace.web.json.JsonUtil;
 import workplace.web.restaurant.RestaurantRestController;
-
-
 import static caferate.RestaurantTestData.*;
 import static caferate.TestUtil.*;
-
 import static caferate.UserTestData.ADMIN;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -49,10 +46,10 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_1_ID)
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_3_ID)
                 .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk());
-        RestaurantTestData.assertMatch(restaurantService.getAll(), RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5);
+        RestaurantTestData.assertMatch(restaurantService.getAll(), RESTAURANT_1, RESTAURANT_2, RESTAURANT_4, RESTAURANT_5, RESTAURANT_6, RESTAURANT_7, RESTAURANT_8, RESTAURANT_9, RESTAURANT_10);
     }
 
     @Test
@@ -62,7 +59,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5));
+                .andExpect(contentJson(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5, RESTAURANT_6, RESTAURANT_7, RESTAURANT_8, RESTAURANT_9, RESTAURANT_10));
     }
 
     @Test
@@ -83,18 +80,31 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     void getAllByDate() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL+ "/all/date")
-                .param("localDate", "2015-06-01")
+                .param("localDate", "2019-08-10")
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(RESTAURANT_1,  RESTAURANT_3, RESTAURANT_4));
+                .andExpect(contentJson(RESTAURANT_1, RESTAURANT_2, RESTAURANT_3, RESTAURANT_4, RESTAURANT_5));
     }
 
     @Test
     void getRestaurantRating() throws Exception {
-        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/rate/" + RESTAURANT_3_ID)
-                .param("localDate", "2015-09-04")
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/rating/bydate/" + RESTAURANT_1_ID)
+                .param("localDate", "2019-08-10")
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        Integer rating = readFromJson(action, Integer.class);
+        System.out.println(rating);
+    }
+
+    @Test
+    void getRatingBetweenDates() throws Exception {
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "/rating/" + RESTAURANT_1_ID)
+                .param("startDate", "2019-08-10")
+                .param("endDate", "2019-08-20")
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())

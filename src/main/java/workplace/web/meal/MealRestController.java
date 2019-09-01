@@ -83,10 +83,4 @@ public class MealRestController {
         log.info("get meal with restaurant by meal id {}", id);
         return service.getMealWithRestaurant(id);
     }
-
-
-
-
-
-
 }

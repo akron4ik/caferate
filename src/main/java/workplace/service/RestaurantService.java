@@ -2,15 +2,11 @@ package workplace.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import workplace.model.Restaurant;
 import workplace.repository.restaurant.DataJpaRestaurantRepository;
 import workplace.repository.voice.DataJpaVoiceRepository;
-import workplace.to.RestaurantTo;
-import workplace.util.RestaurantUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -57,18 +53,8 @@ public class RestaurantService {
         return checkNotFoundWithId(restaurantRepository.getWithMeal(id), id);
     }
 
-
     public List<Restaurant> getRestaurantsByDate(LocalDate date){
         return restaurantRepository.getAllRestaurantsByDate(date);
     }
-
-    public RestaurantTo getRestaurantWithRating(int restaurantId, LocalDate localDate){
-        Restaurant restaurant = checkNotFoundWithId(restaurantRepository.get(restaurantId), restaurantId);
-        int rating = voiceRepository.getRateByRestaurant(restaurantId, localDate);
-        RestaurantTo restaurantTo = RestaurantUtil.asTo(restaurant);
-        restaurantTo.setRating(rating);
-        return restaurantTo;
-    }
-
 
 }

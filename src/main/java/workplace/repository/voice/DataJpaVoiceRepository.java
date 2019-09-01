@@ -47,4 +47,8 @@ public class DataJpaVoiceRepository {
     public int getRateByRestaurant(int restaurantId, LocalDate date){
         return voiceRepository.getCountRestaurantVoicesByDate(restaurantId, date);
     }
+
+    public int getRatingBetween(int restaurantId, LocalDate startDate, LocalDate endDate){
+        return voiceRepository.getRatingBetweenDates(restaurantId, startDate, endDate);
+    }
 }
