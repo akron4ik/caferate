@@ -1,5 +1,6 @@
 package workplace.repository.restaurant;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import workplace.model.Restaurant;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-
+@Repository
 @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
@@ -30,8 +31,8 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     @Query("SELECT c FROM Restaurant c")
     List<Restaurant> getAll();
 
-    @EntityGraph(attributePaths = {"meals"})
-    @Query("SELECT c FROM Restaurant c WHERE c.id=:id")
+    @EntityGraph(attributePaths = {"meals"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT c FROM Restaurant c  WHERE c.id=:id")
      Restaurant getWithMeals(@Param("id") int id);
 
     @Query("SELECT DISTINCT r FROM Restaurant r JOIN FETCH r.meals m WHERE m.date=:dateTime")

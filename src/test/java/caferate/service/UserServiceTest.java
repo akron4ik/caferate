@@ -16,7 +16,7 @@ import java.util.List;
 import static caferate.UserTestData.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DataJpaUserServiceTest extends AbstractServiceTest {
+public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     UserService userService;
@@ -33,7 +33,7 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
         User created = userService.create(newUser);
         newUser.setId(created.getId());
         assertMatch(newUser, created);
-        assertMatch(userService.getAll(), ADMIN, USER_2, USER_3, USER_4, USER_5, USER_6, USER_7, USER_8, USER_9, USER_10, USER_11, USER_12, USER_13, USER_14, USER_15, USER_16, USER_17, USER_18, USER_19, USER_20, newUser);
+        assertMatch(userService.getAll(), ADMIN, USER_4, USER_20, newUser, USER_15, USER_8, USER_12, USER_10, USER_11, USER_3, USER_18, USER_5, USER_14, USER_7, USER_6, USER_17, USER_19, USER_9, USER_13, USER_2, USER_16);
 
     }
 
@@ -52,13 +52,7 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
     @Test
     void delete() throws Exception{
         userService.delete(USER_2_ID);
-        assertMatch(userService.getAll(), ADMIN, USER_3, USER_4, USER_5, USER_6, USER_7, USER_8, USER_9, USER_10, USER_11, USER_12, USER_13, USER_14, USER_15, USER_16, USER_17, USER_18, USER_19, USER_20);
-    }
-
-    @Test
-    void deletedNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () ->
-                userService.delete(1));
+        assertMatch(userService.getAll(), ADMIN, USER_4, USER_20, USER_15, USER_8, USER_12, USER_10, USER_11, USER_3, USER_18, USER_5, USER_14, USER_7, USER_6, USER_17, USER_19, USER_9, USER_13, USER_16);
     }
 
     @Test
@@ -93,6 +87,6 @@ public class DataJpaUserServiceTest extends AbstractServiceTest {
     @Test
     void getAll(){
         List<User> actual = userService.getAll();
-        assertMatch(actual, USERS);
+        assertMatch(actual, ADMIN, USER_4, USER_20, USER_15, USER_8, USER_12, USER_10, USER_11, USER_3, USER_18, USER_5, USER_14, USER_7, USER_6, USER_17, USER_19, USER_9, USER_13, USER_2, USER_16);
     }
 }

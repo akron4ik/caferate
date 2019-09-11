@@ -19,14 +19,14 @@ public class TimingExtension implements
 
     @Override
     public void beforeTestExecution(ExtensionContext extensionContext) throws Exception {
-        log.info("Start stopWatch");
+        log.info("Start");
         stopWatch.start(extensionContext.getDisplayName());
     }
 
     @Override
     public void afterTestExecution(ExtensionContext extensionContext) throws Exception {
         stopWatch.stop();
-        log.info("stop stopWatch");
+        log.info("Stop");
     }
 
     @Override

@@ -46,7 +46,7 @@ CREATE TABLE meals
   restaurant_id   INTEGER                     ,
   FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX meals_unique_name_idx ON meals (restaurant_id, name, date_time);
+CREATE UNIQUE INDEX meals_unique_name_idx ON meals (restaurant_id, date_time, name);
 
 CREATE TABLE voices
 (

@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static caferate.RestaurantTestData.*;
-import static caferate.TestUtil.readFromJsonMvcResult;
 import static caferate.TestUtil.readListFromJsonMvcResult;
 import static org.assertj.core.api.Assertions.assertThat;
 

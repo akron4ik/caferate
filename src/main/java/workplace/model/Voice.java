@@ -8,7 +8,7 @@ import workplace.HasId;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Objects;
+
 
 @Entity
 @Table(name = "voices", uniqueConstraints = @UniqueConstraint(columnNames = {"date_time", "user_id"}, name = "voices_unique_datetime_idx"))
@@ -76,18 +76,5 @@ public class Voice extends AbstractBaseEntity implements HasId {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Voice voice = (Voice) o;
-        return Objects.equals(localDate, voice.localDate) &&
-                Objects.equals(restaurant, voice.restaurant) &&
-                Objects.equals(user, voice.user);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(localDate, restaurant, user);
-    }
 }

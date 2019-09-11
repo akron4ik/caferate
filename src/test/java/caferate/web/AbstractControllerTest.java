@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import workplace.repository.JpaUtil;
+import workplace.service.MealService;
 import workplace.service.RestaurantService;
 import workplace.service.UserService;
 import javax.annotation.PostConstruct;
@@ -45,6 +46,9 @@ abstract public class AbstractControllerTest {
 
     @Autowired
     protected RestaurantService restaurantService;
+
+    @Autowired
+    protected MealService mealService;
 
     @Autowired
     private WebApplicationContext webApplicationContext;

@@ -5,6 +5,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import workplace.AuthorizedUser;
 import workplace.model.User;
-import workplace.repository.user.DataJpaUserRepository;
+import workplace.repository.user.CrudUserRepository;
 import workplace.to.UserTo;
 import workplace.util.UserUtil;
 
@@ -26,13 +27,12 @@ import static workplace.util.ValidationUtil.checkNotFoundWithId;
 @Service("userService")
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserService implements UserDetailsService {
-
-
-    private final DataJpaUserRepository userRepository;
+    private static final Sort SORT = new Sort(Sort.Direction.ASC, "name");
+    private final CrudUserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(DataJpaUserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(CrudUserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -44,12 +44,12 @@ public class UserService implements UserDetailsService {
     }
 
     public User get(int id){
-         return checkNotFoundWithId(userRepository.get(id), id);
+         return checkNotFoundWithId(userRepository.findById(id).orElse(null), id);
     }
 
     public User getByEmail(String email){
         Assert.notNull(email, "email must not be null");
-        return checkNotFound(userRepository.getByEmail(email), "email=" + email);
+        return checkNotFound(userRepository.getUserByEmail(email), "email=" + email);
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -67,12 +67,12 @@ public class UserService implements UserDetailsService {
 
     @CacheEvict(value = "users", allEntries = true)
     public void delete(int id){
-        checkNotFoundWithId(userRepository.delete(id), id);
+        checkNotFoundWithId(userRepository.deleteUserById(id), id);
     }
 
     @Cacheable("users")
     public List<User> getAll(){
-        return userRepository.getAll();
+        return userRepository.findAll(SORT);
     }
 
     @CacheEvict(value = "users", allEntries = true)
@@ -85,7 +85,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public AuthorizedUser loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.getByEmail(email.toLowerCase());
+        User user = userRepository.getUserByEmail(email.toLowerCase());
         if (user == null) {
             throw new UsernameNotFoundException("User " + email + " is not found");
         }

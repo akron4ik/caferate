@@ -1,6 +1,7 @@
 package workplace.repository.meal;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import workplace.model.Meal;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,15 +14,14 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
+@Repository
 @Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 public interface CrudMealRepository extends JpaRepository<Meal, Integer> {
 
     @Override
-    @Modifying
     @Transactional
     Meal save(Meal meal);
 
-    @Modifying
     @Transactional
     int deleteMealById(int id);
 

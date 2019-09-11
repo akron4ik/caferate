@@ -1,6 +1,7 @@
 package workplace.to;
 
-import workplace.model.Voice;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -8,29 +9,31 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class VoiceTo extends BaseTo implements Serializable {
+    @JsonIgnore
+    private int userId;
 
-private int userId;
+    private int restaurantId;
 
-private int restaurantId;
+    @NotNull
+    private LocalDate date = LocalDate.now();
 
-@NotNull
-private LocalDate date = LocalDate.now();
+     public VoiceTo(){
 
-public VoiceTo(){
-
-}
-
-public VoiceTo(VoiceTo voiceTo){
-       this(voiceTo.getId(), voiceTo.getDate(), voiceTo.getRestaurantId(), voiceTo.getUserId());
      }
 
-     public VoiceTo(Integer id, LocalDate date, int restaurantId, int userId) {
+     public VoiceTo(VoiceTo voiceTo){
+       this(voiceTo.getId(), voiceTo.getDate(), voiceTo.getRestaurantId());
+     }
+
+     public VoiceTo(Integer id, LocalDate date, int restaurantId) {
        super(id);
        this.date = date;
        this.restaurantId = restaurantId;
-       this.userId = userId;
+    }
 
-
+    public VoiceTo(Integer id, int restaurantId) {
+        super(id);
+        this.restaurantId = restaurantId;
     }
 
     public int getUserId() {
@@ -74,7 +77,7 @@ public VoiceTo(VoiceTo voiceTo){
         VoiceTo voiceTo = (VoiceTo) o;
         return userId == voiceTo.userId &&
                 restaurantId == voiceTo.restaurantId &&
-                Objects.equals(date, voiceTo.date);
+                date.equals(voiceTo.date);
     }
 
     @Override

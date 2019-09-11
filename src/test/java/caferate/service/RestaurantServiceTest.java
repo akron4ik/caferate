@@ -14,7 +14,7 @@ import static caferate.RestaurantTestData.*;
 
 
 
-public class DataJpaRestaurantServiceTest extends AbstractServiceTest {
+public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Autowired
     RestaurantService restaurantService;

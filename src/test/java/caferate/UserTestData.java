@@ -39,10 +39,6 @@ public class UserTestData {
     public static final User USER_19 = new User(USER_4_ID + 15, "Patric", "patric@patric.ru", "patric", Role.ROlE_USER);
     public static final User USER_20 = new User(USER_4_ID + 16, "Batman", "batman@batman.ru", "batman", Role.ROlE_USER);
 
-    public static final List<User> USERS = List.of(ADMIN, USER_2, USER_3, USER_4, USER_5, USER_6, USER_7, USER_8, USER_9, USER_10, USER_11, USER_12, USER_13, USER_14, USER_15, USER_16, USER_17, USER_18, USER_19, USER_20);
-
-
-
     public static <T> void assertMatch(T actual, T expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "password");
     }

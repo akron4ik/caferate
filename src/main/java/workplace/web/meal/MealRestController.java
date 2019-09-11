@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import workplace.View;
 import workplace.model.Meal;
+import workplace.model.Restaurant;
 import workplace.service.MealService;
+import workplace.service.RestaurantService;
+import workplace.to.MealTo;
+import workplace.util.MealUtil;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
@@ -26,10 +31,12 @@ public class MealRestController {
     private static final Logger log = LoggerFactory.getLogger(MealRestController.class);
 
     private final MealService service;
+    private final RestaurantService restaurantService;
 
     @Autowired
-    public MealRestController(MealService service) {
+    public MealRestController(MealService service, RestaurantService restaurantService) {
         this.service = service;
+        this.restaurantService = restaurantService;
     }
 
     @GetMapping("/{id}")
@@ -45,42 +52,29 @@ public class MealRestController {
         service.delete(id);
     }
 
-    @GetMapping("/all/{restaurantId}")
-    public List<Meal> getAllByRestaurantId(@PathVariable int restaurantId, @RequestParam(required = false) LocalDate localDate) {
+    @GetMapping
+    public List<Meal> getAllByRestaurantId(@RequestParam int restaurantId, @RequestParam(required = false) LocalDate localDate) {
         log.info("get all meals by restaurant id {}", restaurantId);
         return localDate == null ? service.getAllByRestaurantId(restaurantId) : service.getMealsByDate(localDate, restaurantId);
     }
 
-
-    @GetMapping("/day/{restaurantId}")
-    public List<Meal> getAllByRestaurantIdPerDay(@PathVariable int restaurantId){
-        log.info("get all meals by restaurant id {} per day", restaurantId);
-        return service.getMealsByDate(LocalDate.now(), restaurantId);
-    }
-
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Meal meal, @PathVariable int id) {
-        assureIdConsistent(meal, id);
+    public void update(@Validated(View.Web.class) @RequestBody MealTo mealTo, @PathVariable int id) {
+        assureIdConsistent(mealTo, id);
         log.info("update meal {}", id);
-        service.update(meal);
+        service.update(mealTo);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<Meal> createWithLocation(@Validated(View.Web.class) @RequestBody Meal meal) {
-        Meal created = service.create(meal);
-
+    public ResponseEntity<Meal> createWithLocation(@Validated(View.Web.class) @RequestBody MealTo mealTo) {
+        Restaurant restaurant = restaurantService.get(mealTo.getRestaurantId());
+        Meal created = MealUtil.createNewFromTo(mealTo, restaurant);
+        Meal meal = service.create(created);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_MEAL_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
-
-        return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
-    @GetMapping("/restaurant/{id}")
-    public Meal getMealWithRestaurant(@PathVariable int id){
-        log.info("get meal with restaurant by meal id {}", id);
-        return service.getMealWithRestaurant(id);
+        return ResponseEntity.created(uriOfNewResource).body(meal);
     }
 }

@@ -4,6 +4,7 @@ package caferate;
 import org.springframework.test.web.servlet.ResultMatcher;
 import workplace.model.Voice;
 import workplace.to.VoiceTo;
+
 import java.time.LocalDate;
 import java.util.List;
 import static caferate.RestaurantTestData.*;
@@ -47,8 +48,6 @@ public class VoiceTestData {
     public static final Voice VOICE_28 = new Voice(VOICE_3_ID + 25, LocalDate.of(2019, 8, 20), RESTAURANT_3, USER_10);
     public static final Voice VOICE_29 = new Voice(VOICE_3_ID + 26, LocalDate.of(2019, 8, 20), RESTAURANT_3, USER_11);
 
-    public static final List<Voice> VOICES = List.of(VOICE_1, VOICE_2, VOICE_3, VOICE_4, VOICE_5, VOICE_6, VOICE_7, VOICE_8, VOICE_9, VOICE_10, VOICE_11, VOICE_12, VOICE_13, VOICE_14, VOICE_15, VOICE_16, VOICE_17, VOICE_18, VOICE_19, VOICE_20, VOICE_21, VOICE_22, VOICE_23, VOICE_24, VOICE_25, VOICE_26, VOICE_27, VOICE_28, VOICE_29);
-
 
     public static <T> void assertMatch(T actual, T expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "restaurant", "user");
@@ -68,6 +67,10 @@ public class VoiceTestData {
 
     public static ResultMatcher contentJson(Voice... expected) {
         return result -> assertMatch(readListFromJsonMvcResult(result, Voice.class), expected);
+    }
+
+    public static ResultMatcher contentJson(VoiceTo... expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, VoiceTo.class), expected);
     }
 
     public static ResultMatcher contentJson(Voice expected) {

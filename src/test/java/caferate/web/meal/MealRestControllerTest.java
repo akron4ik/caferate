@@ -9,6 +9,8 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import workplace.model.Meal;
 import workplace.service.MealService;
+import workplace.to.MealTo;
+import workplace.util.MealUtil;
 import workplace.web.json.JsonUtil;
 import workplace.web.meal.MealRestController;
 
@@ -31,8 +33,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL + MEAL_2_ID)
-                .with(userHttpBasic(ADMIN)))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL + MEAL_2_ID).with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -41,32 +42,37 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception{
-        Meal expected = new Meal(null, "New",  LocalDate.of(2015,06, 01), 200.4, RESTAURANT_3);
+        MealTo expected = new MealTo(null, "New", LocalDate.of(2015,06, 01), 200.4, RESTAURANT_3_ID);
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_MEAL_URL)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(expected))).andDo(print())
+                .content(JsonUtil.writeValue(expected)))
+                .andDo(print())
                 .andExpect(status().isCreated());
 
         Meal returned = readFromJson(action, Meal.class);
-        expected.setId(returned.getId());
+        Meal created = MealUtil.createNewFromTo(expected, RESTAURANT_3);
+        created.setId(returned.getId());
 
-        MealTestData.assertMatch(returned, expected);
+        MealTestData.assertMatch(returned, created);
     }
 
     @Test
     void update() throws Exception {
-        Meal updated = new Meal(MEAL_7);
+        MealTo updated = MealUtil.asTo(MEAL_7);
         updated.setName("Update");
         updated.setPrice(666);
 
         mockMvc.perform(MockMvcRequestBuilders.put(REST_MEAL_URL + MEAL_7_ID)
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated))).andDo(print())
+                .content(JsonUtil.writeValue(updated)))
+                .andDo(print())
                 .andExpect(status().isNoContent());
+        Meal expected = new Meal(MEAL_7);
+        expected = MealUtil.updateFromTo(expected, updated);
 
-        MealTestData.assertMatch(mealService.get(MEAL_7_ID), updated);
+        MealTestData.assertMatch(mealService.get(MEAL_7_ID), expected);
     }
 
     @Test
@@ -82,7 +88,8 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllByRestaurant() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL + "all/" + RESTAURANT_3_ID )
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL)
+                .param("restaurantId", "100022")
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -92,13 +99,13 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllByRestaurantAndDate() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL + "all/" + RESTAURANT_1_ID)
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL )
+                .param("restaurantId", "100020")
                 .param("localDate","2019-08-10")
                 .with(userHttpBasic(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(MEAL_1, MEAL_2, MEAL_3));
+                .andExpect(contentJson( MEAL_2, MEAL_1, MEAL_3));
     }
-
 }

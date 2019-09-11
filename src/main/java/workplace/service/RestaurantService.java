@@ -5,8 +5,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import workplace.model.Restaurant;
-import workplace.repository.restaurant.DataJpaRestaurantRepository;
-import workplace.repository.voice.DataJpaVoiceRepository;
+import workplace.repository.restaurant.CrudRestaurantRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,13 +14,11 @@ import static workplace.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 public class RestaurantService {
-    private final DataJpaRestaurantRepository restaurantRepository;
-    private final DataJpaVoiceRepository voiceRepository;
+    private final CrudRestaurantRepository restaurantRepository;
 
     @Autowired
-    public RestaurantService(DataJpaRestaurantRepository restaurantRepository, DataJpaVoiceRepository voiceRepository) {
+    public RestaurantService(CrudRestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
-        this.voiceRepository = voiceRepository;
     }
 
     @CacheEvict(value = "meals", allEntries = true)
@@ -31,7 +28,7 @@ public class RestaurantService {
     }
 
     public Restaurant get(int id){
-        return checkNotFoundWithId(restaurantRepository.get(id), id);
+        return checkNotFoundWithId(restaurantRepository.getRestaurantById(id), id);
     }
 
     @CacheEvict(value = "meals", allEntries = true)
@@ -50,11 +47,11 @@ public class RestaurantService {
     }
 
     public Restaurant getWithMeal(int id){
-        return checkNotFoundWithId(restaurantRepository.getWithMeal(id), id);
+        return checkNotFoundWithId(restaurantRepository.getWithMeals(id), id);
     }
 
     public List<Restaurant> getRestaurantsByDate(LocalDate date){
-        return restaurantRepository.getAllRestaurantsByDate(date);
+        return restaurantRepository.getRestaurantsByDate(date);
     }
 
 }

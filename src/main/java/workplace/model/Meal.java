@@ -19,7 +19,7 @@ import java.util.Objects;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Table(name = "meals", uniqueConstraints = @UniqueConstraint(columnNames = {"restaurant_id", "name"}, name = "meals_unique_name_idx"))
+@Table(name = "meals", uniqueConstraints = @UniqueConstraint(columnNames = {"restaurant_id", "date_time", "name"}, name = "meals_unique_name_idx"))
 public class Meal extends AbstractBaseEntity implements HasId {
 
     @Size(min = 2, max = 200)
@@ -103,21 +103,5 @@ public class Meal extends AbstractBaseEntity implements HasId {
                 ", price=" + price +
                 ", id=" + id +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Meal meal = (Meal) o;
-        return Double.compare(meal.price, price) == 0 &&
-                Objects.equals(name, meal.name) &&
-                Objects.equals(date, meal.date) &&
-                Objects.equals(restaurant, meal.restaurant);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, date, price, restaurant);
     }
 }

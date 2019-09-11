@@ -5,23 +5,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import workplace.model.Voice;
-import workplace.repository.voice.DataJpaVoiceRepository;
+import workplace.repository.voice.CrudVoiceRepository;
 import workplace.service.VoiceService;
 import workplace.util.Util;
 import workplace.util.exception.NotFoundException;
 import java.time.LocalDate;
+import java.time.LocalTime;
+
 import static caferate.RestaurantTestData.RESTAURANT_4;
 import static caferate.UserTestData.*;
 import static caferate.VoiceTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
-public class DataJpaVoiceServiceTest extends AbstractServiceTest {
+public class VoiceServiceTest extends AbstractServiceTest {
 
     @Autowired
     VoiceService voiceService;
 
     @Autowired
-    DataJpaVoiceRepository repository;
+    CrudVoiceRepository repository;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -33,34 +36,26 @@ public class DataJpaVoiceServiceTest extends AbstractServiceTest {
     void create() throws Exception{
         Voice voice = new Voice(null, LocalDate.of(2015, 6, 1), RESTAURANT_4, USER_12);
         int userId = USER_12.getId();
-        if(Util.checkVoteTime()) {
-            voiceService.create(voice, userId);
-            VoiceTestData.assertMatch(voiceService.getAll(userId), VOICE_11, voice);
-        } else {
-            VoiceTestData.assertMatch(voiceService.get(VOICE_3_ID + 8, userId), VOICE_11);
-        }
+        voiceService.create(voice, userId);
+        VoiceTestData.assertMatch(voiceService.getAll(userId), VOICE_11, voice);
+
     }
 
     @Test
     void update() throws Exception{
+        assumeFalse(LocalTime.now().isAfter(LocalTime.of(11,0)), "Time for voting is Over, you may change your voice before 11AM");
         Voice voice = new Voice(VOICE_1);
         voice.setRestaurant(RESTAURANT_4);
         int userId = VOICE_1.getUser().getId();
-        if(Util.checkVoteTime()) {
         voiceService.create(voice, userId);
-        }
         VoiceTestData.assertMatch(voiceService.get(VOICE_1_ID, userId), voice);
     }
 
     @Test
     void delete() throws Exception{
-        if(Util.checkVoteTime()) {
+        assumeFalse(LocalTime.now().isAfter(LocalTime.of(11,0)), "Time for voting is Over, you may change your voice before 11AM");
         voiceService.delete(VOICE_3_ID, USER_4_ID);
         VoiceTestData.assertMatch(voiceService.get(VOICE_3_ID + 19, USER_4_ID ), VOICE_22);
-        }
-        else {
-            VoiceTestData.assertMatch(voiceService.getAll(USER_4_ID), VOICE_3, VOICE_22);
-        }
     }
 
     @Test
@@ -75,16 +70,16 @@ public class DataJpaVoiceServiceTest extends AbstractServiceTest {
 
     @Test
     void deleteNotFound() throws Exception{
-        if(Util.checkVoteTime()) {
+        assumeFalse(LocalTime.now().isAfter(LocalTime.of(11,0)), "Time for voting is Over, you may change your voice before 11AM");
             assertThrows(NotFoundException.class, () -> voiceService.delete(1, USER_2_ID));
-        }
+
     }
 
     @Test
     void deleteNotOwn() throws Exception{
-        if(Util.checkVoteTime()) {
-            assertThrows(NotFoundException.class, () -> repository.delete(VOICE_2_ID, USER_2_ID));
-        }
+        assumeFalse(LocalTime.now().isAfter(LocalTime.of(11,0)), "Time for voting is Over, you may change your voice before 11AM");
+        assertThrows(NotFoundException.class, () -> repository.deleteVoiceByIdAndUser_id(VOICE_2_ID, USER_2_ID));
+
     }
 
     @Test

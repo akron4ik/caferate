@@ -1,24 +1,26 @@
 package workplace.util;
 
+import workplace.util.exception.TimeIncorrectException;
+
+import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Util {
-    private static final LocalDate MIN_DATE = LocalDate.of(1, 1, 1);
-    private static final LocalDate MAX_DATE = LocalDate.of(3000, 1, 1);
+    private static final LocalTime HOUR_X = LocalTime.of(11,00);
 
     private Util(){
     }
-    public static boolean checkVoteTime(){
-        return LocalTime.now().isBefore(LocalTime.of(11,00));
+    public static void checkVoteTime(){
+        LocalTime time = LocalTime.now();
+        if(time.isAfter(HOUR_X)){
+            throw new TimeIncorrectException("You can't vote after 11AM");
+        }
     }
 
-    public static LocalDate adjustStartDate(LocalDate localDate) {
-        return localDate == null ? MIN_DATE : localDate;
-    }
-
-    public static LocalDate adjustEndDate(LocalDate localDate) {
-        return localDate == null ? MAX_DATE : localDate;
+    public static void checkVoteDate(LocalDate actual, LocalDate expected){
+       if(!actual.equals(expected)){
+           throw new DateTimeException("This date Incorrect");
+       }
     }
 }

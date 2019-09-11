@@ -33,7 +33,7 @@ public class User extends AbstractBaseEntity implements HasId {
 
     @Column(name = "password", nullable = false)
     @NotBlank
-    @Size(min = 1, max = 200)
+    @Size(min = 3, max = 200)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -140,23 +140,5 @@ public class User extends AbstractBaseEntity implements HasId {
                 ", roles=" + roles +
                 ", id=" + id +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return enabled == user.enabled &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(email, user.email) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(registered, user.registered) &&
-                Objects.equals(roles, user.roles);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, email, password, registered, enabled, roles);
     }
 }

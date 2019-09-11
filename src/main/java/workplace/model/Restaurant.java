@@ -73,17 +73,4 @@ public class Restaurant extends AbstractBaseEntity implements HasId {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Restaurant that = (Restaurant) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(meals, that.meals);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, meals);
-    }
 }

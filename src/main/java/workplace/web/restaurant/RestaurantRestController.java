@@ -14,10 +14,13 @@ import workplace.View;
 import workplace.model.Restaurant;
 import workplace.service.RestaurantService;
 import workplace.service.VoiceService;
+import workplace.to.RestaurantTo;
+import workplace.util.RestaurantUtil;
 
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static workplace.util.ValidationUtil.assureIdConsistent;
 
@@ -28,30 +31,30 @@ public class RestaurantRestController {
     private static final Logger log = LoggerFactory.getLogger(RestaurantRestController.class);
 
     private final RestaurantService restaurantService;
-    private final VoiceService voiceService;
+
 
     @Autowired
-    public RestaurantRestController(RestaurantService restaurantService, VoiceService voiceService ){
+    public RestaurantRestController(RestaurantService restaurantService){
         this.restaurantService = restaurantService;
-        this.voiceService = voiceService;
+
     }
 
     @GetMapping("/all")
-    public List<Restaurant> getAll(){
-        log.info("get all restaurants");
-        return restaurantService.getAll();
+    public List<RestaurantTo> getAllWithoutMeals(@RequestParam(required = false) LocalDate localDate){
+        return  restaurantService.getRestaurantsByDate(localDate == null ? LocalDate.now() : localDate).stream().map(RestaurantUtil::asTo).collect(Collectors.toList());
+
     }
 
-    @GetMapping("/all/date")
-    public List<Restaurant> getAllByDate(@RequestParam LocalDate localDate){
+    @GetMapping
+    public List<Restaurant> getAllByDate(@RequestParam(required = false) LocalDate localDate){
         log.info("get all restaurants by date {}", localDate);
         return restaurantService.getRestaurantsByDate(localDate == null ? LocalDate.now() : localDate);
     }
 
     @GetMapping("/{id}")
-    public Restaurant get(@PathVariable int id){
+    public RestaurantTo get(@PathVariable int id){
         log.info("get restaurants by id {}", id);
-        return restaurantService.get(id);
+        return RestaurantUtil.asTo(restaurantService.get(id));
     }
 
     @GetMapping("/meal/{id}")
@@ -86,16 +89,5 @@ public class RestaurantRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @GetMapping("/rating/bydate/{restaurantId}")
-    public int getRating(@PathVariable int restaurantId, @RequestParam(required = false) LocalDate localDate){
-        log.info("get restaurant rating by restaurant id {} and date{}", restaurantId, localDate);
-        return voiceService.getRating(restaurantId, localDate == null ? LocalDate.now() : localDate);
-    }
-
-    @GetMapping("/rating/{restaurantId}")
-    public int getRatingBetweenDates(@PathVariable int restaurantId, @RequestParam(required = false) LocalDate startDate,@RequestParam(required = false) LocalDate endDate){
-        log.info("get restaurant rating by restaurant id {} and between dates {} and {}", restaurantId, startDate, endDate);
-        return voiceService.getBetweenDates(restaurantId, startDate, endDate);
-    }
 
 }

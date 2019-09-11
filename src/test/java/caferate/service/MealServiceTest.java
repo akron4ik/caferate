@@ -15,7 +15,7 @@ import static caferate.MealTestData.*;
 import static caferate.RestaurantTestData.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DataJpaMealServiceTest extends AbstractServiceTest {
+public class MealServiceTest extends AbstractServiceTest {
 
     @Autowired
     MealService mealService;
