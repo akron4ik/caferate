@@ -31,7 +31,6 @@ public class VoiceService {
         this.userRepository = userRepository;
     }
 
-    @CacheEvict(value = "voices", allEntries = true)
     public Voice create(Voice voice, int userId){
         Assert.notNull(voice, " voice must be not null ");
         User user = userRepository.getOne(userId);
@@ -44,7 +43,6 @@ public class VoiceService {
 
     }
 
-    @CacheEvict(value = "voices", allEntries = true)
     public Voice create(VoiceTo voiceTo, int userId){
         Assert.notNull(voiceTo, " voice must be not null ");
         Voice voice = new Voice(null, voiceTo.getDate(),
@@ -57,7 +55,6 @@ public class VoiceService {
         }
     }
 
-    @CacheEvict(value = "voices", allEntries = true)
     public void delete(int id, int userId){
         Util.checkVoteTime();
         checkNotFoundWithId(voiceRepository.deleteVoiceByIdAndUser_id(id, userId), id);
@@ -68,7 +65,6 @@ public class VoiceService {
         return checkNotFoundWithId(voiceRepository.getVoiceByIdAndUser_Id(id, userId), id);
     }
 
-    @CacheEvict(value = "voices", allEntries = true)
     public void update(VoiceTo voiceTo, int userId){
         Assert.notNull(voiceTo, " voiceTo must be not null ");
         Voice voice = get(voiceTo.getId(), userId);
@@ -79,8 +75,6 @@ public class VoiceService {
 
 
     }
-
-    @Cacheable("voices")
     public List<Voice> getAll(int userId){
         return voiceRepository.getAllByUser_Id(userId);
     }

@@ -17,7 +17,6 @@
     </cache-template>
 
     <cache alias="users" uses-template="singleNonExpiryCache"/>
-    <cache alias="voices" uses-template="singleNonExpiryCache"/>
-    <cache alias="meals" uses-template="singleNonExpiryCache"/>
+    <cache alias="restaurants" uses-template="singleNonExpiryCache"/>
 
 </config>

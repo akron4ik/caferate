@@ -30,18 +30,15 @@ public class MealService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    @CacheEvict(value = "meals", allEntries = true)
     public Meal create(Meal meal){
         Assert.notNull(meal, "meal must not be null");
         return mealRepository.save(meal);
     }
 
-    @CacheEvict(value = "meals", allEntries = true)
     public void delete(int id){
         checkNotFoundWithId(mealRepository.deleteMealById(id),id);
     }
 
-    @CacheEvict(value = "meals", allEntries = true)
     public void update(Meal meal){
         Assert.notNull(meal, "meal must not be null");
         checkNotFoundWithId(mealRepository.save(meal), meal.getId());
@@ -53,17 +50,14 @@ public class MealService {
         checkNotFoundWithId(mealRepository.save(MealUtil.updateFromTo(meal, mealTo)), mealTo.getId());
     }
 
-    @Cacheable("meals")
     public Meal get(int id){
         return checkNotFoundWithId(mealRepository.getMealById(id), id);
     }
 
-    @Cacheable("meals")
     public List<Meal> getAllByRestaurantId(int restaurantId){
         return mealRepository.getMealsByRestaurantId(restaurantId, SORT_BY_DATE);
     }
 
-    @Cacheable("meals")
     public List<Meal> getAll(){return mealRepository.getAll();}
 
     public Meal getMealWithRestaurant(int id){

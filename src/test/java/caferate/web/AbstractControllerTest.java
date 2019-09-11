@@ -53,7 +53,6 @@ abstract public class AbstractControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-
     @PostConstruct
     private void postConstruct() {
         mockMvc = MockMvcBuilders
@@ -62,12 +61,4 @@ abstract public class AbstractControllerTest {
                 .apply(springSecurity())
                 .build();
     }
-
-    @BeforeEach
-    void setUp() {
-        cacheManager.getCache("users").clear();
-        cacheManager.getCache("meals").clear();
-        jpaUtil.clear2ndLevelHibernateCache();
-    }
-
 }

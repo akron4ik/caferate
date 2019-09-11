@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @CacheEvict(value = "users", allEntries = true)
+
     public User create(User user){
         Assert.notNull(user, "user must not be null");
         return userRepository.save(prepareToSave(user, passwordEncoder));
@@ -52,30 +52,25 @@ public class UserService implements UserDetailsService {
         return checkNotFound(userRepository.getUserByEmail(email), "email=" + email);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     public void update(User user){
         Assert.notNull(user, "user must not be null");
         checkNotFoundWithId(userRepository.save(user), user.getId());
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void update(UserTo userTo) {
         User user = get(userTo.id());
         userRepository.save(prepareToSave(UserUtil.updateFromTo(user, userTo), passwordEncoder));
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     public void delete(int id){
         checkNotFoundWithId(userRepository.deleteUserById(id), id);
     }
 
-    @Cacheable("users")
     public List<User> getAll(){
         return userRepository.findAll(SORT);
     }
 
-    @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void enable(int id, boolean enabled) {
         User user = get(id);

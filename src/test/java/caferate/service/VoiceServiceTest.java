@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import workplace.model.Voice;
 import workplace.repository.voice.CrudVoiceRepository;
 import workplace.service.VoiceService;
-import workplace.util.Util;
 import workplace.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,12 +24,6 @@ public class VoiceServiceTest extends AbstractServiceTest {
 
     @Autowired
     CrudVoiceRepository repository;
-
-    @BeforeEach
-    void setUp() throws Exception {
-        cacheManager.getCache("voices").clear();
-        jpaUtil.clear2ndLevelHibernateCache();
-    }
 
     @Test
     void create() throws Exception{

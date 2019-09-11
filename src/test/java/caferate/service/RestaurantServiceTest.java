@@ -21,7 +21,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        cacheManager.getCache("meals").clear();
+        cacheManager.getCache("restaurants").clear();
         jpaUtil.clear2ndLevelHibernateCache();
     }
 

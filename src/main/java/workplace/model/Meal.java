@@ -18,7 +18,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Table(name = "meals", uniqueConstraints = @UniqueConstraint(columnNames = {"restaurant_id", "date_time", "name"}, name = "meals_unique_name_idx"))
 public class Meal extends AbstractBaseEntity implements HasId {
 

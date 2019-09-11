@@ -2,7 +2,6 @@ package caferate.service;
 
 import caferate.MealTestData;
 import caferate.RestaurantTestData;
-import org.junit.jupiter.api.BeforeEach;
 import workplace.model.Meal;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +18,6 @@ public class MealServiceTest extends AbstractServiceTest {
 
     @Autowired
     MealService mealService;
-
-    @BeforeEach
-    void setUp() throws Exception {
-        cacheManager.getCache("meals").clear();
-        jpaUtil.clear2ndLevelHibernateCache();
-    }
 
     @Test
     void delete() throws Exception {

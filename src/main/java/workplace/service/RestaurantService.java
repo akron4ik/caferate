@@ -2,6 +2,7 @@ package workplace.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import workplace.model.Restaurant;
@@ -21,7 +22,6 @@ public class RestaurantService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    @CacheEvict(value = "meals", allEntries = true)
     public Restaurant create(Restaurant restaurant){
         Assert.notNull(restaurant, "restaurant must be not null");
         return restaurantRepository.save(restaurant);
@@ -31,12 +31,10 @@ public class RestaurantService {
         return checkNotFoundWithId(restaurantRepository.getRestaurantById(id), id);
     }
 
-    @CacheEvict(value = "meals", allEntries = true)
     public void delete(int id){
         checkNotFoundWithId(restaurantRepository.delete(id), id);
     }
 
-    @CacheEvict(value = "meals", allEntries = true)
     public void update(Restaurant restaurant){
         Assert.notNull(restaurant,"restaurant must be not null");
         checkNotFoundWithId(restaurantRepository.save(restaurant), restaurant.getId());
@@ -50,6 +48,7 @@ public class RestaurantService {
         return checkNotFoundWithId(restaurantRepository.getWithMeals(id), id);
     }
 
+    @Cacheable("restaurants")
     public List<Restaurant> getRestaurantsByDate(LocalDate date){
         return restaurantRepository.getRestaurantsByDate(date);
     }
