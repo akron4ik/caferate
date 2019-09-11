@@ -54,7 +54,7 @@ public class AdminRestControllerTest extends AbstractControllerTest {
     void update() throws Exception {
         User updated = new User(USER_2);
         updated.setName("UpdatedName");
-        updated.setRoles(Collections.singletonList(Role.ROlE_ADMIN));
+        updated.setRoles(Collections.singletonList(Role.ROLE_ADMIN));
         mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + USER_2_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
@@ -67,7 +67,7 @@ public class AdminRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        User expected = new User(null, "New", "new@gmail.com", "newPass", Role.ROlE_USER);
+        User expected = new User(null, "New", "new@gmail.com", "newPass", Role.ROLE_USER);
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))

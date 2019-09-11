@@ -37,8 +37,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_3_ID)
-                .with(userHttpBasic(ADMIN)))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_3_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -72,8 +71,7 @@ public class RestaurantRestControllerTest extends AbstractControllerTest {
     @Test
     void getAllByDate() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL)
-                .param("localDate", "2019-08-10")
-                .with(userHttpBasic(ADMIN)))
+                .param("localDate", "2019-08-10"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

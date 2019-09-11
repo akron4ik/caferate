@@ -28,26 +28,26 @@ INSERT INTO users (name, email, password) VALUES
   ('Batman', 'batman@batman.ru','{noop}batman');
 
 INSERT INTO user_roles (role, user_id) VALUES
-  ('ROlE_ADMIN', 100000),
-  ('ROlE_USER', 100001),
-  ('ROlE_USER', 100002),
-  ('ROlE_USER', 100003),
-  ('ROlE_USER', 100004),
-  ('ROlE_USER', 100005),
-  ('ROlE_USER', 100006),
-  ('ROlE_USER', 100007),
-  ('ROlE_USER', 100008),
-  ('ROlE_USER', 100009),
-  ('ROlE_USER', 100010),
-  ('ROlE_USER', 100011),
-  ('ROlE_USER', 100012),
-  ('ROlE_USER', 100013),
-  ('ROlE_USER', 100014),
-  ('ROlE_USER', 100015),
-  ('ROlE_USER', 100016),
-  ('ROlE_USER', 100017),
-  ('ROlE_USER', 100018),
-  ('ROlE_USER', 100019);
+  ('ROLE_ADMIN', 100000),
+  ('ROLE_USER', 100001),
+  ('ROLE_USER', 100002),
+  ('ROLE_USER', 100003),
+  ('ROLE_USER', 100004),
+  ('ROLE_USER', 100005),
+  ('ROLE_USER', 100006),
+  ('ROLE_USER', 100007),
+  ('ROLE_USER', 100008),
+  ('ROLE_USER', 100009),
+  ('ROLE_USER', 100010),
+  ('ROLE_USER', 100011),
+  ('ROLE_USER', 100012),
+  ('ROLE_USER', 100013),
+  ('ROLE_USER', 100014),
+  ('ROLE_USER', 100015),
+  ('ROLE_USER', 100016),
+  ('ROLE_USER', 100017),
+  ('ROLE_USER', 100018),
+  ('ROLE_USER', 100019);
 
 INSERT INTO restaurants (name) VALUES
   ('Капри'),/*20*/

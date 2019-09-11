@@ -29,7 +29,7 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     void create() throws Exception{
-        User newUser = new User(null, "Created", "created@created.ru", "created", new Date(), true, Collections.singleton(Role.ROlE_USER));
+        User newUser = new User(null, "Created", "created@created.ru", "created", new Date(), true, Collections.singleton(Role.ROLE_USER));
         User created = userService.create(newUser);
         newUser.setId(created.getId());
         assertMatch(newUser, created);
@@ -40,7 +40,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     void duplicateMailCreate() throws Exception {
         assertThrows(DataAccessException.class, () ->
-                userService.create(new User(null, "Duplicate", "admin@admin.ru", "newPass", new Date(), true, Collections.singleton(Role.ROlE_USER))));
+                userService.create(new User(null, "Duplicate", "admin@admin.ru", "newPass", new Date(), true, Collections.singleton(Role.ROLE_USER))));
     }
 
     @Test

@@ -33,7 +33,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL + MEAL_2_ID).with(userHttpBasic(ADMIN)))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL + MEAL_2_ID))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -89,8 +89,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
     @Test
     void getAllByRestaurant() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL)
-                .param("restaurantId", "100022")
-                .with(userHttpBasic(ADMIN)))
+                .param("restaurantId", "100022"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -101,8 +100,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
     void getAllByRestaurantAndDate() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_MEAL_URL )
                 .param("restaurantId", "100020")
-                .param("localDate","2019-08-10")
-                .with(userHttpBasic(ADMIN)))
+                .param("localDate","2019-08-10"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

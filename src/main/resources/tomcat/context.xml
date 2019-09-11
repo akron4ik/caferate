@@ -36,10 +36,10 @@
     <Resource name="jdbc/caferate"
               auth="Container"
               type="javax.sql.DataSource"
-              url="jdbc:postgresql://localhost:5432/caferate"
+              url="jdbc:hsqldb:file:D:/temp/voting-system;hsqldb.lock_file=false"
               username="user"
               password="password"
-              driverClassName="org.postgresql.Driver"
+              driverClassName="org.hsqldb.jdbcDriver"
               validationQuery="SELECT 1"
               maxTotal="10"
               minIdle="2"
@@ -49,9 +49,4 @@
               testOnBorrow="true"
               removeAbandonedOnBorrow="true"
               testWhileIdle="true"/>
-    <!--
-        username="wegxlfzjjgxaxy"
-        password="SSQyKKE_e93kiUCR-ehzMcKCxZ"
-        url="jdbc:postgresql://ec2-54-217-202-110.eu-west-1.compute.amazonaws.com:5432/dehm6lvm8bink0?ssl=true&amp;sslfactory=org.postgresql.ssl.NonValidatingFactory"/>
-    -->
 </Context>
