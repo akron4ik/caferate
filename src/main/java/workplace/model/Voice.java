@@ -19,11 +19,12 @@ public class Voice extends AbstractBaseEntity implements HasId {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate localDate;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", foreignKey = @ForeignKey(name = "GLOBAL_SEQ", foreignKeyDefinition = "START WITH 100000"))
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "GLOBAL_SEQ", foreignKeyDefinition = "START WITH 100000"))
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
