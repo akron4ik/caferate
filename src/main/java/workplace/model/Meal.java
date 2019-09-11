@@ -70,7 +70,7 @@ public class Meal extends AbstractBaseEntity implements HasId {
         return date;
     }
 
-    public void setDate(LocalDate dateTime) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
